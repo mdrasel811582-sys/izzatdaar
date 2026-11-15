@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0E6B52">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>IZZATDAAR</title>
+<style>
+:root{
+  --bg:#EEF2EF; --surface:#FFFFFF; --ink:#13241D; --muted:#5B6D63; --line:#D3DDD7;
+  --accent:#0E6B52; --accent-ink:#FFFFFF; --warn:#B24A30;
+  --f-head:system-ui,-apple-system,'Segoe UI','Noto Sans Bengali','Noto Sans',sans-serif;
+  --f-body:system-ui,-apple-system,'Segoe UI','Noto Sans Bengali','Noto Sans',sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1511; --surface:#142019; --ink:#E6EFEA; --muted:#93A89B; --line:#26372E;
+    --accent:#3FBF97; --accent-ink:#06150F; --warn:#E5836A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1511; --surface:#142019; --ink:#E6EFEA; --muted:#93A89B; --line:#26372E;
+  --accent:#3FBF97; --accent-ink:#06150F; --warn:#E5836A; color-scheme:dark;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px 6px}
+.brand{font-family:var(--f-head);font-weight:800;font-size:20px;letter-spacing:.12em;min-width:0}
+.hbtn{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:600;font-size:13.5px;color:var(--accent)}
+.hbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.subbar{padding-bottom:12px}
+.pill{display:inline-block;font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-variant-numeric:tabular-nums}
+.hero{display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.ring{flex:none;width:124px;height:124px}
+.ring .track{stroke:var(--line)}
+.ring .bar{stroke:var(--accent);transition:stroke-dashoffset .5s ease}
+.ring text{fill:var(--ink);font-family:var(--f-head);font-weight:700}
+.ring .pc{fill:var(--muted);font-size:12px;font-weight:500}
+.hero .d{font-size:13px;color:var(--muted)}
+.hero .cap{font-size:17px;font-weight:600;line-height:1.35;margin-top:2px}
+.hero .cnt{font-size:13px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+.back{margin-top:8px;background:none;border:0;padding:0;color:var(--accent);font-size:13px;text-decoration:underline}
+h2{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-family:var(--f-head);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 4px 8px;font-weight:500}
+h2 span{letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 14px;min-height:60px}
+.row .box{flex:none;width:30px;height:30px;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;color:transparent}
+.row .box svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.row .txt{flex:1;min-width:0;display:flex;flex-direction:column}
+.row b{font-weight:600;overflow-wrap:anywhere}
+.row small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.row .pts{flex:none;font-family:var(--f-head);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.row[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.row[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.row[aria-pressed="true"] .pts{color:var(--accent)}
+.row:disabled{opacity:.55;cursor:default}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.card h3{font-family:var(--f-head);font-size:16px;margin:0 0 10px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.stat .v{font-family:var(--f-head);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--warn)}
+.ibar{display:grid;grid-template-columns:minmax(0,1fr) 84px 44px;align-items:center;gap:10px;font-size:13px;margin-top:8px}
+.ibar .n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ibar .t{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.ibar .t i{display:block;height:100%;background:var(--accent)}
+.ibar .c{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.btn{display:block;width:100%;margin-top:14px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:13px 16px;font-weight:600;text-align:center}
+.btn.sec{background:none;color:var(--accent);border:1px solid var(--accent);margin-top:0;width:auto;padding:8px 12px;font-size:13px}
+.btn.sec.full{width:100%;margin-top:10px;padding:12px 16px;font-size:15px}
+.btn:disabled{opacity:.45;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btns .btn{margin-top:0;flex:1;min-width:120px;background:none;color:var(--accent);border:1px solid var(--accent)}
+.cyc{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:9px;border-top:1px solid var(--line)}
+.cyc:first-of-type{border-top:0}
+.cyc .m{min-width:0;font-size:13.5px}
+.cyc .m small{display:block;color:var(--muted);font-size:12.5px}
+details{border-top:1px solid var(--line);padding-block:8px}
+details summary{cursor:pointer;font-weight:600;font-size:14px;padding-block:4px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .wd{text-align:center;font-size:11.5px;color:var(--muted);padding-bottom:2px}
+.cal .wd.f{color:var(--accent);font-weight:600}
+.cell{aspect-ratio:1;border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;background:color-mix(in srgb,var(--accent) calc(var(--lv,0)*0.5%),var(--surface));font-variant-numeric:tabular-nums;line-height:1.15}
+.cell b{font-size:14px;font-weight:600}
+.cell small{font-size:10px;color:var(--muted)}
+.cell.fut{opacity:.4;cursor:default}
+.cell.now{border:2px solid var(--accent)}
+.cell.sel{outline:2px solid var(--ink);outline-offset:1px}
+.cell.pad{border:0;background:none;visibility:hidden}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:12px}
+.legend i{display:block;width:70px;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--surface),color-mix(in srgb,var(--accent) 50%,var(--surface)));border:1px solid var(--line)}
+.start{text-align:center;padding-top:48px}
+.start h1{font-family:var(--f-head);letter-spacing:.14em;font-size:30px;margin:0 0 10px}
+.start p{color:var(--muted);margin:0 auto 6px;max-width:30ch}
+.note{color:var(--muted);font-size:13px;text-align:center;padding:30px 8px}
+.small{color:var(--muted);font-size:13px;margin:0 0 4px}
+/* edit screen */
+.inp{width:100%;min-width:0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit}
+.gh{display:flex;gap:10px;align-items:center;margin-bottom:4px}
+.gname{font-weight:700}
+.gt{flex:none;font-size:13px;color:var(--muted);white-space:nowrap}
+.erow{border-top:1px solid var(--line);padding-block:10px;display:flex;flex-direction:column;gap:8px}
+.e1{display:flex;align-items:center;gap:10px}
+.ep{flex:none;min-width:54px;text-align:right;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.e2{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;color:var(--muted)}
+.e2 label{display:inline-flex;align-items:center;gap:6px}
+.e2 select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font:inherit}
+.e2 input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+.del{margin-left:auto;color:var(--warn)!important;border-color:var(--warn)!important}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:13.5px;max-width:90vw;z-index:20;text-align:center}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.tabs .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs button{background:none;border:0;border-radius:10px;padding:11px 4px;color:var(--muted);font-weight:500;border-top:3px solid transparent}
+.tabs button[aria-selected="true"]{color:var(--accent);border-top-color:var(--accent);font-weight:600}
+
+.tabs .in{grid-template-columns:repeat(4,1fr)!important}
+.dsec{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px;margin:0 -2px;-webkit-overflow-scrolling:touch}
+.dsec button{flex:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13.5px;color:var(--muted);white-space:nowrap}
+.dsec button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.days{display:flex;flex-wrap:wrap;align-items:center;gap:4px;width:100%}
+.days>span{margin-right:4px}
+.dbtn{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:12.5px;color:var(--muted)}
+.dbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.gtot{width:76px;display:inline-block;padding:6px 8px;text-align:right}
+.sok{color:var(--accent)}.sbad{color:var(--warn)}
+.dc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:10px}
+.dc .dt{font-weight:700;font-size:14.5px;margin-bottom:6px;color:var(--accent)}
+.dc .ar{direction:rtl;text-align:right;font-family:'Amiri','Noto Naskh Arabic','Scheherazade New','Traditional Arabic','Geeza Pro',serif;font-size:26px;line-height:2.1}
+.dc .tr{font-size:14px;color:var(--ink);margin-top:6px;font-style:italic}
+.dc .mn{font-size:14px;color:var(--muted);margin-top:6px}
+.dc .rf{font-size:12px;color:var(--accent);margin-top:8px}
+.dc .no{float:left;font-size:12px;color:var(--muted);margin-right:8px;font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){.ring .bar{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">IZZATDAAR</div>
+    <button class="hbtn" id="editBtn" data-act="edit" hidden aria-label="Edit items"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Edit</button>
+  </header>
+  <div class="subbar"><span class="pill" id="pill" hidden></span></div>
+  <main id="main"></main>
+</div>
+<nav class="tabs" id="tabs" hidden aria-label="Sections"><div class="in">
+  <button data-tab="today" aria-selected="true">Today</button>
+  <button data-tab="cal" aria-selected="false">Calendar</button>
+  <button data-tab="report" aria-selected="false">Report</button>
+  <button data-tab="dua" aria-selected="false">Dua</button>
+</div></nav>
+<div class="toast" id="toast" role="status" hidden></div>
+<input type="file" id="importFile" accept=".json,application/json" hidden>
+
+<script>
+(function(){
+/* ---------- default setup: group totals stay fixed, items share them by weight ---------- */
+var DEF=[
+ {id:'namaz',name:'Namaz',total:40,items:[
+  {k:'fajr',n:'Fazar',w:1},{k:'zuhr',n:'Zuhr',w:1},{k:'asr',n:'Asr',w:1},{k:'magrib',n:'Magrib',w:1},{k:'isha',n:'Isha',w:1}]},
+ {id:'zikr',name:'Dua & Istagfar',total:25,items:[
+  {k:'istagfar',n:'Istagfar',s:'150 times',w:2},
+  {k:'dua',n:'Dua',s:'Every hour (dua after namaz does not count)',w:1},
+  {k:'tauba',n:'Tauba',w:1},
+  {k:'illness',n:'3 Dua for illness-free body',s:'3 duas a day',w:1}]},
+ {id:'surah',name:'Surah',total:10,items:[
+  {k:'waqiah',n:'Surah Waqiah',w:1},{k:'mulk',n:'Surah Mulk',w:1}]},
+ {id:'nafal',name:'Nafal & Tahajjud',total:25,items:[
+  {k:'hajatF',n:'2 Nafal Hajat Namaz (Fazar)',s:'After Fazar',w:1},
+  {k:'hajatA',n:'2 Nafal Hajat Namaz (Asr)',s:'After Asr',w:1},
+  {k:'tahajjud',n:'Tahajjud',w:2},
+  {k:'roza',n:'2 Nafal Roza',s:'Monday & Thursday',w:1,days:[1,4]}]}
+];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var BNDAY=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var ENDAY=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var N=41, KEY='izzatdaar.v1', MAXI=12;
+
+function pad(n){return String(n).padStart(2,'0')}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function parse(s){var a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
+function dayDiff(a,b){var x=a.split('-').map(Number),y=b.split('-').map(Number);return Math.round((Date.UTC(y[0],y[1]-1,y[2])-Date.UTC(x[0],x[1]-1,x[2]))/864e5)}
+function addDays(s,n){var d=parse(s);d.setDate(d.getDate()+n);return ymd(d)}
+function fmt(s){var d=parse(s);return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()}
+function fmtS(s){var d=parse(s);return d.getDate()+' '+MON[d.getMonth()]}
+function today(){return ymd(new Date())}
+function fmtP(x){return String(Math.round(x*10)/10)}
+function H(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function applies(it,date){return !it.days||it.days.indexOf(parse(date).getDay())>=0}
+
+var $=function(s){return document.querySelector(s)};
+var docs={},meta=null,tab='today',sel=null,banner=null,memOnly=false,toastTimer=null,lastDay=today(),editing=false,draft=null;
+
+/* ---------- storage (this phone only) ---------- */
+function load(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):{}}catch(e){memOnly=true;return {}}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(docs))}catch(e){if(!memOnly){memOnly=true;toast('Data is not being saved. Browser storage is blocked.')}}}
+function toast(t){var el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(function(){el.hidden=true},3200)}
+function cycles(){return Object.keys(docs).filter(function(k){return k.indexOf('cycle-')===0}).map(function(k){return docs[k]}).sort(function(a,b){return b.n-a.n})}
+function checks(date){var d=docs['day-'+date];return (d&&d.c)||{}}
+function setOf(date){
+  var d=docs['day-'+date];
+  if(d&&d.c)return new Set(Object.keys(d.c).filter(function(k){return d.c[k]}));
+  var cs=cycles();
+  for(var i=0;i<cs.length;i++){var j=dayDiff(cs[i].start,date);if(j>=0&&j<N){var s=cs[i].days&&cs[i].days[j];return new Set(s?s.split(','):[])}}
+  return new Set();
+}
+
+/* ---------- configuration history: a change applies from the day it is saved ---------- */
+function cfgFor(date){
+  var h=docs.cfg&&docs.cfg.length?docs.cfg:[{from:'0000-00-00',g:DEF}],r=h[0];
+  for(var i=0;i<h.length;i++)if(h[i].from<=date)r=h[i];
+  return r.g;
+}
+function sumw(g){return g.items.reduce(function(a,i){return a+i.w},0)}
+function flat(date){
+  var out=[];
+  cfgFor(date).forEach(function(g){var sw=sumw(g);g.items.forEach(function(it){out.push({k:it.k,n:it.n,s:it.s,days:it.days,w:it.w,g:g.id,gn:g.name,gt:g.total,p:sw?g.total*it.w/sw:0})})});
+  return out;
+}
+function calc(date,set){
+  var e=0,p=0,done=0,tot=0;
+  flat(date).forEach(function(it){if(!applies(it,date))return;p+=it.p;tot++;if(set.has(it.k)){e+=it.p;done++}});
+  return {score:p?Math.round(e/p*100):0,done:done,tot:tot};
+}
+
+/* ---------- views ---------- */
+function ringSvg(s){
+  var C=2*Math.PI*54;
+  return '<svg class="ring" viewBox="0 0 132 132" role="img" aria-label="'+s+'%">'+
+  '<circle class="track" cx="66" cy="66" r="54" fill="none" stroke-width="12"/>'+
+  '<circle class="bar" cx="66" cy="66" r="54" fill="none" stroke-width="12" stroke-linecap="round" transform="rotate(-90 66 66)" stroke-dasharray="'+C.toFixed(2)+'" stroke-dashoffset="'+(C*(1-s/100)).toFixed(2)+'"/>'+
+  '<text x="62" y="76" text-anchor="middle" font-size="36">'+s+'</text><text class="pc" x="92" y="76" text-anchor="start">%</text></svg>';
+}
+var CHECK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function viewToday(){
+  var t=today(),date=sel,set=setOf(date),r=calc(date,set),isToday=date===t,d=parse(date);
+  var cap=isToday?'So far today you are '+r.score+'% Izzatdaar':'On '+fmtS(date)+' you were '+r.score+'% Izzatdaar';
+  var h='<section class="hero">'+ringSvg(r.score)+'<div><div class="d">'+BNDAY[d.getDay()]+', '+fmt(date)+' · Day '+(dayDiff(meta.start,date)+1)+'/'+N+'</div><div class="cap">'+cap+'</div><div class="cnt">'+r.done+' of '+r.tot+' done</div>'+(isToday?'':'<button class="back" data-act="gotoday">Back to today</button>')+'</div></section>';
+  if(banner!==null&&docs['cycle-'+banner]){
+    h+='<section class="card"><h3>Cycle '+banner+' complete</h3><div style="color:var(--muted);font-size:14px">The 41 days are over and a new cycle has started. Download the main report (PDF).</div><button class="btn" data-act="pdfc" data-n="'+banner+'">Download main report (PDF)</button></section>';
+  }
+  var items=flat(date);
+  cfgFor(date).forEach(function(g){
+    var its=items.filter(function(i){return i.g===g.id});
+    var dn=its.filter(function(i){return set.has(i.k)}).length;
+    h+='<h2>'+H(g.name)+'<span>'+dn+'/'+its.length+' · '+fmtP(g.total)+'%</span></h2><div class="list">';
+    its.forEach(function(it){
+      var off=!applies(it,date);
+      h+='<button class="row" data-k="'+H(it.k)+'" aria-pressed="'+(set.has(it.k)?'true':'false')+'"'+(off?' disabled':'')+'><span class="box">'+CHECK+'</span><span class="txt"><b>'+H(it.n)+'</b>'+(off?'<small>Not applicable today</small>':(it.s?'<small>'+H(it.s)+'</small>':''))+'</span><span class="pts">'+fmtP(it.p)+'%</span></button>';
+    });
+    h+='</div>';
+  });
+  return h;
+}
+
+function viewCal(){
+  var t=today(),start=meta.start,off=parse(start).getDay(),h='<section class="card" style="margin-top:6px"><h3>41-day calendar</h3><div style="color:var(--muted);font-size:13px;margin:-4px 0 12px">'+fmt(start)+' – '+fmt(addDays(start,N-1))+'</div><div class="cal">';
+  for(var w=0;w<7;w++)h+='<div class="wd'+((w===1||w===4)?' f':'')+'">'+ENDAY[w][0]+'</div>';
+  for(var p=0;p<off;p++)h+='<div class="cell pad"></div>';
+  for(var i=0;i<N;i++){
+    var date=addDays(start,i),fut=date>t,r=calc(date,setOf(date)),d=parse(date);
+    var lab=(i===0||d.getDate()===1)?MON[d.getMonth()]:(fut?'':r.score+'%');
+    h+='<button class="cell'+(fut?' fut':'')+(date===t?' now':'')+(date===sel?' sel':'')+'" '+(fut?'disabled ':'')+'data-date="'+date+'" style="--lv:'+(fut?0:r.score)+'" aria-label="'+fmt(date)+(fut?'':', '+r.score+'%')+'"><b>'+d.getDate()+'</b><small>'+(lab||'&nbsp;')+'</small></button>';
+  }
+  h+='</div><div class="legend">Low <i></i> High &nbsp;·&nbsp; green letters = Mon/Thu</div></section>';
+  return h;
+}
+
+function cycleInfoCurrent(){
+  var t=today(),el=Math.min(N,dayDiff(meta.start,t)+1),days=[];
+  for(var i=0;i<el;i++){var d=addDays(meta.start,i);days.push({date:d,keys:setOf(d)})}
+  return {n:meta.cycle,start:meta.start,days:days,partial:el<N};
+}
+function cycleInfoArchive(n){
+  var c=docs['cycle-'+n];if(!c)return null;
+  var days=[];for(var i=0;i<N;i++){var d=addDays(c.start,i);days.push({date:d,keys:setOf(d)})}
+  return {n:c.n,start:c.start,days:days,partial:false};
+}
+function summarize(info){
+  var sc=info.days.map(function(d){return calc(d.date,d.keys).score});
+  var sum=sc.reduce(function(a,b){return a+b},0),best=-1,bi=0;
+  sc.forEach(function(s,i){if(s>best){best=s;bi=i}});
+  return {scores:sc,avg:sc.length?Math.round(sum/sc.length):0,best:best<0?0:best,bestDate:sc.length?info.days[bi].date:null,hi:sc.filter(function(s){return s>=80}).length};
+}
+function itemStats(info){
+  var map={},order=[];
+  info.days.forEach(function(d){
+    flat(d.date).forEach(function(it){
+      var m=map[it.k];
+      if(!m){m=map[it.k]={k:it.k,n:it.n,p:it.p,poss:0,done:0};order.push(it.k)}
+      m.n=it.n;m.p=it.p;
+      if(applies(it,d.date)){m.poss++;if(d.keys.has(it.k))m.done++}
+    });
+  });
+  return order.map(function(k){return map[k]}).filter(function(m){return m.poss>0});
+}
+function dayRows(start,count,desc){
+  var rows='',list=[];
+  for(var i=0;i<count;i++)list.push(addDays(start,i));
+  if(desc)list.reverse();
+  list.forEach(function(date){
+    var r=calc(date,setOf(date)),d=parse(date);
+    rows+='<div class="cyc"><div class="m"><b>'+fmtS(date)+' · '+ENDAY[d.getDay()]+'</b><small>'+r.score+'% Izzatdaar · '+r.done+'/'+r.tot+'</small></div><button class="btn sec" data-act="pdfday" data-date="'+date+'">PDF</button></div>';
+  });
+  return rows;
+}
+
+function viewReport(){
+  var t=today(),set=setOf(sel),r=calc(sel,set),h='';
+  var missed=flat(sel).filter(function(i){return applies(i,sel)&&!set.has(i.k)});
+  h+='<section class="card" style="margin-top:6px"><h3>'+(sel===t?'Today\'s report':'Report for '+fmtS(sel))+'</h3><div class="grid2"><div class="stat"><div class="v">'+r.score+'%</div><div class="l">Izzatdaar</div></div><div class="stat"><div class="v">'+r.done+'/'+r.tot+'</div><div class="l">Items done</div></div></div>'+
+  '<div style="margin-top:12px;font-size:13px;color:var(--muted)">'+(missed.length?'Remaining':'All items done, Alhamdulillah')+'</div><div class="chips" style="margin-top:6px">'+missed.map(function(i){return '<span class="chip">'+H(i.n)+'</span>'}).join('')+'</div>'+
+  '<button class="btn" data-act="pdfday" data-date="'+sel+'">Download this day\'s PDF</button></section>';
+
+  var info=cycleInfoCurrent(),sm=summarize(info),el=info.days.length;
+  h+='<section class="card"><h3>Cycle '+info.n+' · so far</h3><div class="grid2">'+
+   '<div class="stat"><div class="v">'+sm.avg+'%</div><div class="l">Average</div></div>'+
+   '<div class="stat"><div class="v">'+sm.best+'%</div><div class="l">Best day'+(sm.bestDate?' ('+fmtS(sm.bestDate)+')':'')+'</div></div>'+
+   '<div class="stat"><div class="v">'+sm.hi+'</div><div class="l">Days 80%+</div></div>'+
+   '<div class="stat"><div class="v">'+el+'/'+N+'</div><div class="l">Days passed</div></div></div>';
+  itemStats(info).forEach(function(it){
+    h+='<div class="ibar"><span class="n">'+H(it.n)+'</span><span class="t"><i style="width:'+Math.round(it.done/it.poss*100)+'%"></i></span><span class="c">'+it.done+'/'+it.poss+'</span></div>';
+  });
+  h+='<p class="small" style="margin-top:14px">The main report (PDF) appears under "Previous cycles" once the 41 days are over.</p></section>';
+
+  var auto=!!(docs.settings&&docs.settings.auto);
+  h+='<section class="card"><h3>Reports folder</h3><p class="small">Every day&#39;s report is kept here. Download any day as a PDF, or all days of the cycle in one ZIP file.</p>'+
+  '<button class="btn sec full" data-act="zipcur">All daily reports of this cycle (ZIP)</button>'+
+  '<div class="list" style="margin-top:10px"><button class="row" data-act="auto" aria-pressed="'+(auto?'true':'false')+'"><span class="box">'+CHECK+'</span><span class="txt"><b>Try to download automatically</b><small>When you open the app on a new day, it tries to download yesterday&#39;s PDF. It may not work if your phone or app blocks it.</small></span></button></div>'+
+  '<div style="margin-top:8px">'+dayRows(info.start,el,true)+'</div></section>';
+
+  var cs=cycles();
+  if(cs.length){
+    h+='<section class="card"><h3>Previous cycles</h3>';
+    cs.forEach(function(c){
+      var s2=summarize(cycleInfoArchive(c.n));
+      h+='<div class="cyc"><div class="m"><b>Cycle '+c.n+'</b> · Avg '+s2.avg+'%<small>'+fmtS(c.start)+' – '+fmt(c.end)+'</small></div><button class="btn sec" data-act="pdfc" data-n="'+c.n+'">Main report</button></div>'+
+        '<details><summary>Daily reports</summary><button class="btn sec full" data-act="zipc" data-n="'+c.n+'" style="margin-top:4px">All daily reports (ZIP)</button>'+dayRows(c.start,N,false)+'</details>';
+    });
+    h+='</section>';
+  }
+  h+='<section class="card"><h3>Backup</h3><p class="small">Your data is saved on this phone only. It is lost if you delete the app or clear its data, so download a backup file now and then.</p><div class="btns"><button class="btn" data-act="export">Download backup</button><button class="btn" data-act="import">Restore backup</button></div></section>';
+  return h;
+}
+
+function viewStart(){
+  return '<section class="start"><h1>IZZATDAAR</h1><p>Tick off your daily deeds and track them.</p><p>When the 41 days end, your PDF report is ready and a new 41-day cycle starts by itself.</p><button class="btn" data-act="begin" style="margin-top:24px">Start today</button></section>';
+}
+
+
+/* ---------- Dua section ---------- */
+var DUA=`
+#৯৯ নাম
+الرَّحْمَنُ|আর-রাহমান|পরম দয়াময়
+الرَّحِيمُ|আর-রাহীম|অতি করুণাময়
+الْمَلِكُ|আল-মালিক|মহা অধিপতি
+الْقُدُّوسُ|আল-কুদ্দুস|পরম পবিত্র
+السَّلَامُ|আস-সালাম|শান্তিদাতা
+الْمُؤْمِنُ|আল-মুমিন|নিরাপত্তাদাতা
+الْمُهَيْمِنُ|আল-মুহাইমিন|রক্ষক ও তত্ত্বাবধায়ক
+الْعَزِيزُ|আল-আযীয|মহাপরাক্রমশালী
+الْجَبَّارُ|আল-জাব্বার|মহাপ্রতাপশালী
+الْمُتَكَبِّرُ|আল-মুতাকাব্বির|মহামহিম
+الْخَالِقُ|আল-খালিক|সৃষ্টিকর্তা
+الْبَارِئُ|আল-বারি|উদ্ভাবক
+الْمُصَوِّرُ|আল-মুসাওয়ির|রূপদানকারী
+الْغَفَّارُ|আল-গাফফার|মহাক্ষমাশীল
+الْقَهَّارُ|আল-কাহহার|মহাপরাক্রান্ত
+الْوَهَّابُ|আল-ওয়াহহাব|মহাদাতা
+الرَّزَّاقُ|আর-রাযযাক|রিযিকদাতা
+الْفَتَّاحُ|আল-ফাত্তাহ|দ্বার উন্মোচনকারী
+الْعَلِيمُ|আল-আলীম|সর্বজ্ঞ
+الْقَابِضُ|আল-কাবিয|সংকুচিতকারী
+الْبَاسِطُ|আল-বাসিত|প্রসারণকারী
+الْخَافِضُ|আল-খাফিয|অবনতকারী
+الرَّافِعُ|আর-রাফি|উন্নতকারী
+الْمُعِزُّ|আল-মুইজ্জ|সম্মানদাতা
+الْمُذِلُّ|আল-মুযিল্ল|অপমানকারী
+السَّمِيعُ|আস-সামী|সর্বশ্রোতা
+الْبَصِيرُ|আল-বাসীর|সর্বদ্রষ্টা
+الْحَكَمُ|আল-হাকাম|চূড়ান্ত বিচারক
+الْعَدْلُ|আল-আদল|ন্যায়বিচারক
+اللَّطِيفُ|আল-লাতীফ|সূক্ষ্মদর্শী ও দয়ালু
+الْخَبِيرُ|আল-খাবীর|সর্বজ্ঞাত
+الْحَلِيمُ|আল-হালীম|পরম সহনশীল
+الْعَظِيمُ|আল-আযীম|মহান
+الْغَفُورُ|আল-গাফূর|অতি ক্ষমাশীল
+الشَّكُورُ|আশ-শাকূর|গুণগ্রাহী
+الْعَلِيُّ|আল-আলী|সুউচ্চ
+الْكَبِيرُ|আল-কাবীর|সর্ববৃহৎ
+الْحَفِيظُ|আল-হাফীয|মহারক্ষক
+الْمُقِيتُ|আল-মুকীত|শক্তি ও জীবিকাদাতা
+الْحَسِيبُ|আল-হাসীব|হিসাব গ্রহণকারী
+الْجَلِيلُ|আল-জালীল|মহিমান্বিত
+الْكَرِيمُ|আল-কারীম|মহানুভব
+الرَّقِيبُ|আর-রাকীব|তত্ত্বাবধায়ক
+الْمُجِيبُ|আল-মুজীব|দোয়া কবুলকারী
+الْوَاسِعُ|আল-ওয়াসি|সর্বব্যাপী
+الْحَكِيمُ|আল-হাকীম|প্রজ্ঞাময়
+الْوَدُودُ|আল-ওয়াদূদ|প্রেমময়
+الْمَجِيدُ|আল-মাজীদ|মহাগৌরবময়
+الْبَاعِثُ|আল-বাইস|পুনরুত্থানকারী
+الشَّهِيدُ|আশ-শাহীদ|সর্বসাক্ষী
+الْحَقُّ|আল-হক্ক|পরম সত্য
+الْوَكِيلُ|আল-ওয়াকীল|ভরসাস্থল ও কার্যনির্বাহক
+الْقَوِيُّ|আল-কাওয়ি|মহাশক্তিমান
+الْمَتِينُ|আল-মাতীন|অতি দৃঢ়
+الْوَلِيُّ|আল-ওয়ালী|অভিভাবক ও বন্ধু
+الْحَمِيدُ|আল-হামীদ|প্রশংসিত
+الْمُحْصِي|আল-মুহসী|সবকিছুর গণনাকারী
+الْمُبْدِئُ|আল-মুবদি|সূচনাকারী
+الْمُعِيدُ|আল-মুঈদ|পুনরায় সৃষ্টিকারী
+الْمُحْيِي|আল-মুহঈ|জীবনদাতা
+الْمُمِيتُ|আল-মুমীত|মৃত্যুদাতা
+الْحَيُّ|আল-হাইয়্যু|চিরঞ্জীব
+الْقَيُّومُ|আল-কাইয়্যূম|সবকিছুর ধারক
+الْوَاجِدُ|আল-ওয়াজিদ|সর্বপ্রাপক
+الْمَاجِدُ|আল-মাজিদ|মহিমাময়
+الْوَاحِدُ|আল-ওয়াহিদ|এক
+الأَحَدُ|আল-আহাদ|অদ্বিতীয়
+الصَّمَدُ|আস-সামাদ|অমুখাপেক্ষী
+الْقَادِرُ|আল-কাদির|সর্বশক্তিমান
+الْمُقْتَدِرُ|আল-মুকতাদির|পূর্ণ ক্ষমতাবান
+الْمُقَدِّمُ|আল-মুকাদ্দিম|অগ্রবর্তীকারী
+الْمُؤَخِّرُ|আল-মুআখখির|পশ্চাদবর্তীকারী
+الأَوَّلُ|আল-আউয়াল|সর্বপ্রথম
+الآخِرُ|আল-আখির|সর্বশেষ
+الظَّاهِرُ|আয-যাহির|প্রকাশমান
+الْبَاطِنُ|আল-বাতিন|গোপন
+الْوَالِي|আল-ওয়ালি|পরিচালক
+الْمُتَعَالِي|আল-মুতাআলি|সর্বোচ্চ মর্যাদাবান
+الْبَرُّ|আল-বার্র|পরম কল্যাণকারী
+التَّوَّابُ|আত-তাওওয়াব|তাওবা কবুলকারী
+الْمُنْتَقِمُ|আল-মুনতাকিম|ন্যায্য প্রতিশোধ গ্রহণকারী
+الْعَفُوُّ|আল-আফুউ|মার্জনাকারী
+الرَّءُوفُ|আর-রাউফ|অতি স্নেহশীল
+مَالِكُ الْمُلْكِ|মালিকুল মুলক|সমগ্র রাজ্যের মালিক
+ذُو الْجَلَالِ وَالإِكْرَامِ|যুল জালালি ওয়াল ইকরাম|মহিমা ও সম্মানের অধিকারী
+الْمُقْسِطُ|আল-মুকসিত|ন্যায়পরায়ণ
+الْجَامِعُ|আল-জামি|একত্রকারী
+الْغَنِيُّ|আল-গানিয়্যু|অভাবমুক্ত
+الْمُغْنِي|আল-মুগনী|অভাবমোচনকারী
+الْمَانِعُ|আল-মানি|প্রতিরোধকারী
+الضَّارُّ|আয-যার্র|ক্ষতির নিয়ন্ত্রক
+النَّافِعُ|আন-নাফি|উপকারের নিয়ন্ত্রক
+النُّورُ|আন-নূর|আলো
+الْهَادِي|আল-হাদী|পথপ্রদর্শক
+الْبَدِيعُ|আল-বাদী|অনুপম সৃষ্টিকর্তা
+الْبَاقِي|আল-বাকী|চিরস্থায়ী
+الْوَارِثُ|আল-ওয়ারিস|চূড়ান্ত উত্তরাধিকারী
+الرَّشِيدُ|আর-রাশীদ|সঠিক পথনির্দেশক
+الصَّبُورُ|আস-সাবূর|পরম ধৈর্যশীল
+#নামাজের সূরা
+সূরা ফাতিহা (১)|بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ۝ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ|বিসমিল্লাহির রাহমানির রাহীম। আলহামদু লিল্লাহি রাব্বিল আলামীন। আর-রাহমানির রাহীম। মালিকি ইয়াওমিদ্দীন। ইয়্যাকা নাবুদু ওয়া ইয়্যাকা নাসতাঈন। ইহদিনাস সিরাতাল মুস্তাকীম। সিরাতাল্লাযীনা আনআমতা আলাইহিম, গাইরিল মাগযূবি আলাইহিম ওয়ালাদ দ্বাল্লীন।|পরম করুণাময় অতি দয়ালু আল্লাহর নামে। সমস্ত প্রশংসা আল্লাহর, যিনি সৃষ্টিজগতের প্রতিপালক। যিনি পরম করুণাময়, অতি দয়ালু। যিনি বিচার দিনের মালিক। আমরা শুধু আপনারই ইবাদত করি এবং শুধু আপনারই সাহায্য চাই। আমাদের সরল পথ দেখান। তাদের পথ, যাদের আপনি অনুগ্রহ করেছেন; তাদের পথ নয়, যারা ক্রোধে নিপতিত ও পথভ্রষ্ট।|
+সূরা ইখলাস (১১২)|قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ|কুল হুওয়াল্লাহু আহাদ। আল্লাহুস সামাদ। লাম ইয়ালিদ ওয়া লাম ইউলাদ। ওয়া লাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।|বলুন, তিনি আল্লাহ, এক। আল্লাহ অমুখাপেক্ষী। তিনি কাউকে জন্ম দেননি, এবং তিনিও জন্মগ্রহণ করেননি। আর তাঁর সমকক্ষ কেউ নেই।|
+সূরা ফালাক (১১৩)|قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ|কুল আঊযু বিরাব্বিল ফালাক। মিন শাররি মা খালাক। ওয়া মিন শাররি গাসিকিন ইযা ওয়াকাব। ওয়া মিন শাররিন নাফফাসাতি ফিল উকাদ। ওয়া মিন শাররি হাসিদিন ইযা হাসাদ।|বলুন, আমি ভোরের রবের আশ্রয় চাই, তিনি যা সৃষ্টি করেছেন তার অনিষ্ট থেকে; অন্ধকার রাতের অনিষ্ট থেকে যখন তা ছেয়ে যায়; গিরায় ফুঁ দানকারিণীদের অনিষ্ট থেকে; এবং হিংসুকের অনিষ্ট থেকে যখন সে হিংসা করে।|
+সূরা নাস (১১৪)|قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ|কুল আঊযু বিরাব্বিন নাস। মালিকিন নাস। ইলাহিন নাস। মিন শাররিল ওয়াসওয়াসিল খান্নাস। আল্লাযী ইউওয়াসউইসু ফী সুদূরিন নাস। মিনাল জিন্নাতি ওয়ান নাস।|বলুন, আমি মানুষের রবের আশ্রয় চাই; মানুষের অধিপতির; মানুষের উপাস্যের; কুমন্ত্রণাদাতা আত্মগোপনকারীর অনিষ্ট থেকে; যে মানুষের অন্তরে কুমন্ত্রণা দেয়; জিনের মধ্য থেকে এবং মানুষের মধ্য থেকে।|
+সূরা কাওসার (১০৮)|إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ ۝ فَصَلِّ لِرَبِّكَ وَانْحَرْ ۝ إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ|ইন্না আতাইনাকাল কাওসার। ফাসাল্লি লিরাব্বিকা ওয়ানহার। ইন্না শানিআকা হুওয়াল আবতার।|নিশ্চয়ই আমরা আপনাকে কাওসার দান করেছি। অতএব আপনার রবের উদ্দেশ্যে নামায পড়ুন ও কুরবানী করুন। নিশ্চয়ই আপনার শত্রুই নির্বংশ।|
+সূরা আসর (১০৩)|وَالْعَصْرِ ۝ إِنَّ الْإِنسَانَ لَفِي خُسْرٍ ۝ إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ|ওয়াল আসর। ইন্নাল ইনসানা লাফী খুসর। ইল্লাল্লাযীনা আমানূ ওয়া আমিলুস সালিহাতি ওয়া তাওয়াসাও বিল হাক্কি ওয়া তাওয়াসাও বিস সাবর।|সময়ের শপথ। নিশ্চয়ই মানুষ ক্ষতির মধ্যে আছে। তারা ছাড়া, যারা ঈমান এনেছে, সৎকাজ করেছে এবং পরস্পরকে সত্যের ও ধৈর্যের উপদেশ দিয়েছে।|
+সূরা কাফিরূন (১০৯)|قُلْ يَا أَيُّهَا الْكَافِرُونَ ۝ لَا أَعْبُدُ مَا تَعْبُدُونَ ۝ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ۝ وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ ۝ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ۝ لَكُمْ دِينُكُمْ وَلِيَ دِينِ|কুল ইয়া আইয়্যুহাল কাফিরূন। লা আবুদু মা তাবুদূন। ওয়া লা আনতুম আবিদূনা মা আবুদ। ওয়া লা আনা আবিদুম মা আবাদতুম। ওয়া লা আনতুম আবিদূনা মা আবুদ। লাকুম দীনুকুম ওয়ালিয়া দীন।|বলুন, হে কাফিররা! তোমরা যার ইবাদত করো, আমি তার ইবাদত করি না। আমি যাঁর ইবাদত করি, তোমরাও তাঁর ইবাদতকারী নও। তোমরা যার ইবাদত করেছ, আমি তার ইবাদতকারী হব না। আমি যাঁর ইবাদত করি, তোমরাও তাঁর ইবাদতকারী হবে না। তোমাদের দ্বীন তোমাদের, আমার দ্বীন আমার।|
+সূরা নাসর (১১০)|إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ ۝ وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا ۝ فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ إِنَّهُ كَانَ تَوَّابًا|ইযা জা-আ নাসরুল্লাহি ওয়াল ফাতহ। ওয়া রাআইতান নাসা ইয়াদখুলূনা ফী দীনিল্লাহি আফওয়াজা। ফাসাব্বিহ বিহামদি রাব্বিকা ওয়াসতাগফিরহু, ইন্নাহু কানা তাওওয়াবা।|যখন আল্লাহর সাহায্য ও বিজয় আসবে, এবং আপনি মানুষকে দলে দলে আল্লাহর দ্বীনে প্রবেশ করতে দেখবেন, তখন আপনার রবের প্রশংসাসহ পবিত্রতা ঘোষণা করুন ও তাঁর কাছে ক্ষমা চান; নিশ্চয়ই তিনি তাওবা কবুলকারী।|
+সূরা মাসাদ/লাহাব (১১১)|تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ ۝ مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ ۝ سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ ۝ وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ ۝ فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ|তাব্বাত ইয়াদা আবী লাহাবিঁউ ওয়া তাব্ব। মা আগনা আনহু মালুহু ওয়া মা কাসাব। সাইয়াসলা নারান যাতা লাহাব। ওয়ামরাআতুহু হাম্মালাতাল হাতাব। ফী জীদিহা হাবলুম মিম মাসাদ।|আবু লাহাবের দুই হাত ধ্বংস হোক এবং সে নিজেও ধ্বংস হোক। তার ধন-সম্পদ ও উপার্জন তার কাজে আসেনি। সে শীঘ্রই লেলিহান আগুনে প্রবেশ করবে, এবং তার স্ত্রীও, যে লাকড়ি বহনকারিণী। তার গলায় থাকবে খেজুর-আঁশের পাকানো দড়ি।|
+সূরা কুরাইশ (১০৬)|لِإِيلَافِ قُرَيْشٍ ۝ إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ ۝ فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ ۝ الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ|লি-ঈলাফি কুরাইশ। ঈলাফিহিম রিহলাতাশ শিতা-ই ওয়াস সাইফ। ফাল ইয়াবুদূ রাব্বা হাযাল বাইত। আল্লাযী আতআমাহুম মিন জূ'ইওঁ ওয়া আমানাহুম মিন খাওফ।|কুরাইশদের আসক্তির কারণে, শীত ও গ্রীষ্মের সফরে তাদের আসক্তির কারণে, তাদের উচিত এই ঘরের রবের ইবাদত করা, যিনি তাদের ক্ষুধায় খাদ্য দিয়েছেন এবং ভয় থেকে নিরাপত্তা দিয়েছেন।|
+সূরা ফীল (১০৫)|أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ۝ أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ ۝ وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ۝ تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ ۝ فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ|আলাম তারা কাইফা ফাআলা রাব্বুকা বিআসহাবিল ফীল। আলাম ইয়াজআল কাইদাহুম ফী তাযলীল। ওয়া আরসালা আলাইহিম তাইরান আবাবীল। তারমীহিম বিহিজারাতিম মিন সিজ্জীল। ফাজাআলাহুম কাআসফিম মাকূল।|আপনি কি দেখেননি, আপনার রব হাতিওয়ালাদের সাথে কী করেছেন? তিনি কি তাদের চক্রান্ত ব্যর্থ করে দেননি? তিনি তাদের উপর ঝাঁকে ঝাঁকে পাখি পাঠিয়েছিলেন, যারা তাদের উপর পোড়া মাটির পাথর নিক্ষেপ করছিল। অতঃপর তিনি তাদের চিবানো ভুসির মতো করে দিলেন।|
+সূরা মাঊন (১০৭)|أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ ۝ فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ ۝ وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ ۝ فَوَيْلٌ لِّلْمُصَلِّينَ ۝ الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ ۝ الَّذِينَ هُمْ يُرَاءُونَ ۝ وَيَمْنَعُونَ الْمَاعُونَ|আরাআইতাল্লাযী ইউকাযযিবু বিদ্দীন। ফাযালিকাল্লাযী ইয়াদুউল ইয়াতীম। ওয়া লা ইয়াহুদ্দু আলা তাআমিল মিসকীন। ফাওয়াইলুল লিলমুসাল্লীন। আল্লাযীনা হুম আন সালাতিহিম সাহূন। আল্লাযীনা হুম ইউরাউন। ওয়া ইয়ামনাউনাল মাউন।|আপনি কি তাকে দেখেছেন, যে প্রতিদান দিবসকে অস্বীকার করে? সে-ই ইয়াতীমকে ধাক্কা দেয় এবং মিসকীনকে খাদ্য দিতে উৎসাহ দেয় না। অতএব দুর্ভোগ সেই মুসল্লীদের জন্য, যারা নিজেদের নামাজে অমনোযোগী, যারা লোক দেখানোর জন্য করে এবং ছোটখাটো প্রয়োজনীয় জিনিসও দিতে বারণ করে।|
+আয়াতুল কুরসী (সূরা বাকারা ২:২৫৫)|اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ|আল্লাহু লা ইলাহা ইল্লা হুওয়াল হাইয়্যুল কাইয়্যূম, লা তাখুযুহূ সিনাতুঁও ওয়ালা নাউম, লাহূ মা ফিস সামাওয়াতি ওয়া মা ফিল আরদ, মান যাল্লাযী ইয়াশফাউ ইনদাহূ ইল্লা বিইযনিহ, ইয়ালামু মা বাইনা আইদীহিম ওয়া মা খালফাহুম, ওয়া লা ইউহীতূনা বিশাইইম মিন ইলমিহী ইল্লা বিমা শা-আ, ওয়াসিআ কুরসিইয়্যুহুস সামাওয়াতি ওয়াল আরদ, ওয়া লা ইয়াউদুহূ হিফযুহুমা, ওয়া হুওয়াল আলিইয়্যুল আযীম।|আল্লাহ ছাড়া কোনো ইলাহ নেই; তিনি চিরঞ্জীব, সবকিছুর ধারক। তাঁকে তন্দ্রা ও নিদ্রা স্পর্শ করে না। আসমান ও জমিনে যা আছে সব তাঁরই। তাঁর অনুমতি ছাড়া কে তাঁর কাছে সুপারিশ করতে পারে? তাদের সামনের ও পেছনের সবকিছু তিনি জানেন। তিনি যা চান তা ছাড়া তাঁর জ্ঞানের কিছুই তারা আয়ত্ত করতে পারে না। তাঁর কুরসী আসমান-জমিন জুড়ে বিস্তৃত; এ দুটির রক্ষণাবেক্ষণ তাঁকে ক্লান্ত করে না। তিনি সুউচ্চ, মহান।|বাকারা ২:২৫৫; বুখারী ২৩১১ (প্রতি ফরজ নামাজের পর পড়ার ফযীলত: নাসাঈ, আমালুল ইয়াওম ১০০; সহীহ)
+#দৈনন্দিন দোয়া
+ঘর থেকে বের হওয়ার দোয়া|بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ|বিসমিল্লাহি তাওয়াক্কালতু আলাল্লাহি, ওয়ালা হাওলা ওয়ালা কুওয়্যাতা ইল্লা বিল্লাহ।|আল্লাহর নামে (বের হচ্ছি), আল্লাহর উপর ভরসা করলাম; আল্লাহর সাহায্য ছাড়া কোনো উপায় ও শক্তি নেই।|আবু দাউদ ৫০৯৫; তিরমিযী ৩৪২৬
+ঘরে ঢোকার দোয়া|بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا|বিসমিল্লাহি ওয়ালাজনা, ওয়া বিসমিল্লাহি খারাজনা, ওয়া আলা রাব্বিনা তাওয়াক্কালনা।|আল্লাহর নামে প্রবেশ করলাম, তাঁর নামেই বের হলাম এবং আমাদের রবের উপর ভরসা করলাম। (এরপর পরিবারকে সালাম দিন)|আবু দাউদ ৫০৯৬
+খাবার আগের দোয়া|بِسْمِ اللَّهِ|বিসমিল্লাহ। (শুরুতে ভুলে গেলে: বিসমিল্লাহি আউওয়ালাহু ওয়া আখিরাহু)|আল্লাহর নামে (শুরু করছি)। (ভুলে গেলে: শুরুতে ও শেষে আল্লাহর নামে)|আবু দাউদ ৩৭৬৭; তিরমিযী ১৮৫৮
+খাবার পরের দোয়া|الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ|আলহামদু লিল্লাহিল্লাযী আতআমানা ওয়া সাকানা ওয়া জাআলানা মুসলিমীন।|সমস্ত প্রশংসা আল্লাহর, যিনি আমাদের খাইয়েছেন, পান করিয়েছেন এবং মুসলিম বানিয়েছেন।|আবু দাউদ ৩৮৫০; তিরমিযী ৩৪৫৭
+বাথরুমে ঢোকার দোয়া|اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ|আল্লাহুম্মা ইন্নী আঊযু বিকা মিনাল খুবুসি ওয়াল খাবায়িস।|হে আল্লাহ, আমি নোংরা পুরুষ ও নারী জিন (শয়তান) থেকে আপনার আশ্রয় চাই।|বুখারী ১৪২; মুসলিম ৩৭৫
+বাথরুম থেকে বের হওয়ার দোয়া|غُفْرَانَكَ|গুফরানাক।|(হে আল্লাহ) আমি আপনার ক্ষমা চাই।|আবু দাউদ ৩০; তিরমিযী ৭
+ঘুমানোর দোয়া|اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا|আল্লাহুম্মা বিসমিকা আমূতু ওয়া আহইয়া।|হে আল্লাহ, আপনার নামেই আমি মরি (ঘুমাই) এবং বাঁচি (জাগি)।|বুখারী ৬৩২৪
+ঘুম থেকে ওঠার দোয়া|الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ|আলহামদু লিল্লাহিল্লাযী আহইয়ানা বা'দা মা আমাতানা ওয়া ইলাইহিন নুশূর।|সমস্ত প্রশংসা আল্লাহর, যিনি মৃত্যুর (ঘুমের) পর আমাদের জীবিত করেছেন, আর তাঁর কাছেই ফিরে যেতে হবে।|বুখারী ৬৩১২
+নতুন পোশাক বা পোশাক পরার দোয়া|الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ|আলহামদু লিল্লাহিল্লাযী কাসানী হাযা ওয়া রাযাকানীহি মিন গাইরি হাওলিম মিন্নী ওয়ালা কুওয়্যাহ।|সমস্ত প্রশংসা আল্লাহর, যিনি আমার কোনো শক্তি-সামর্থ্য ছাড়াই আমাকে এটি পরিয়েছেন ও রিযিক দিয়েছেন।|আবু দাউদ ৪০২৩; তিরমিযী ৩৪৫৮
+যানবাহনে ওঠার দোয়া|سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ|সুবহানাল্লাযী সাখখারা লানা হাযা ওয়া মা কুন্না লাহু মুকরিনীন, ওয়া ইন্না ইলা রাব্বিনা লামুনকালিবূন।|পবিত্র তিনি, যিনি এটিকে আমাদের বশীভূত করেছেন; আমরা একে বশ করতে সক্ষম ছিলাম না। আমরা অবশ্যই আমাদের রবের কাছে ফিরে যাব।|সূরা যুখরুফ ১৩-১৪; মুসলিম ১৩৪২
+মসজিদে ঢোকার দোয়া|اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ|আল্লাহুম্মাফতাহ লী আবওয়াবা রাহমাতিক।|হে আল্লাহ, আমার জন্য আপনার রহমতের দরজাগুলো খুলে দিন।|মুসলিম ৭১৩
+মসজিদ থেকে বের হওয়ার দোয়া|اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ|আল্লাহুম্মা ইন্নী আসআলুকা মিন ফাদলিক।|হে আল্লাহ, আমি আপনার অনুগ্রহ প্রার্থনা করি।|মুসলিম ৭১৩
+সকাল-সন্ধ্যার সুরক্ষার দোয়া (৩ বার)|بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ|বিসমিল্লাহিল্লাযী লা ইয়াদুররু মা'আসমিহী শাইউন ফিল আরদি ওয়ালা ফিস সামাই ওয়া হুওয়াস সামীউল আলীম।|আল্লাহর নামে, যাঁর নামের সাথে আসমান-জমিনের কোনো কিছুই ক্ষতি করতে পারে না; তিনি সর্বশ্রোতা, সর্বজ্ঞ।|আবু দাউদ ৫০৮৮; তিরমিযী ৩৩৮৮
+বিপদ বা মুসিবতের দোয়া|إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا|ইন্না লিল্লাহি ওয়া ইন্না ইলাইহি রাজিউন। আল্লাহুম্মা'জুরনী ফী মুসীবাতী ওয়াখলুফ লী খাইরাম মিনহা।|নিশ্চয়ই আমরা আল্লাহরই এবং তাঁর কাছেই ফিরে যাব। হে আল্লাহ, আমার বিপদে আমাকে প্রতিদান দিন এবং এর চেয়ে উত্তম কিছু দান করুন।|মুসলিম ৯১৮
+ওযুর পরের দোয়া|أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ|আশহাদু আল লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসূলুহ।|আমি সাক্ষ্য দিচ্ছি, আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি একক, তাঁর কোনো শরীক নেই; এবং মুহাম্মাদ ﷺ তাঁর বান্দা ও রাসূল। (যে এটি পড়বে তার জন্য জান্নাতের আটটি দরজা খুলে দেওয়া হয়)|মুসলিম ২৩৪
+আয়নায় দেখার দোয়া|اللَّهُمَّ أَنْتَ حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي|আল্লাহুম্মা আনতা হাসসানতা খালকী ফাহাসসিন খুলুকী।|হে আল্লাহ, আপনি আমার আকৃতি সুন্দর করেছেন, তাই আমার চরিত্রও সুন্দর করে দিন।|মুসনাদ আহমাদ ৩৮২৩
+রাগ দমনের দোয়া|أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ|আঊযু বিল্লাহি মিনাশ শাইতানির রাজীম।|বিতাড়িত শয়তান থেকে আমি আল্লাহর আশ্রয় চাই। (রাগের সময় এটি বললে রাগ চলে যায়)|বুখারী ৩২৮২; মুসলিম ২৬১০
+বৃষ্টি দেখলে পড়ার দোয়া|اللَّهُمَّ صَيِّبًا نَافِعًا|আল্লাহুম্মা সাইয়্যিবান নাফিআ।|হে আল্লাহ, কল্যাণকর বৃষ্টি দিন।|বুখারী ১০৩২
+নতুন চাঁদ দেখার দোয়া|اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ رَبِّي وَرَبُّكَ اللَّهُ|আল্লাহুম্মা আহিল্লাহু আলাইনা বিল ইউমনি ওয়াল ঈমান, ওয়াস সালামাতি ওয়াল ইসলাম, রাব্বী ওয়া রাব্বুকাল্লাহ।|হে আল্লাহ, এই চাঁদকে আমাদের উপর নিরাপত্তা, ঈমান, শান্তি ও ইসলামের সাথে উদিত করুন। (হে চাঁদ) আমার ও তোমার রব আল্লাহ।|তিরমিযী ৩৪৫১
+উপকারীর জন্য দোয়া|جَزَاكَ اللَّهُ خَيْرًا|জাযাকাল্লাহু খাইরান।|আল্লাহ আপনাকে উত্তম প্রতিদান দিন। (নবী ﷺ বলেছেন, এটি বললে প্রশংসার যথেষ্ট হক আদায় হয়)|তিরমিযী ২০৩৫
+হাঁচি দিলে ও হাঁচির জবাবে|الْحَمْدُ لِلَّهِ ← يَرْحَمُكَ اللَّهُ ← يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ|আলহামদুলিল্লাহ ← ইয়ারহামুকাল্লাহ ← ইয়াহদীকুমুল্লাহু ওয়া ইউসলিহু বালাকুম।|হাঁচিদাতা বলবে 'আলহামদুলিল্লাহ'; শ্রোতা বলবে 'আল্লাহ আপনাকে রহম করুন'; জবাবে বলবে 'আল্লাহ আপনাদের হিদায়াত দিন ও অবস্থা সংশোধন করুন'।|বুখারী ৬২২৪
+কঠিন কাজ সহজ হওয়ার দোয়া|اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا|আল্লাহুম্মা লা সাহলা ইল্লা মা জাআলতাহু সাহলা, ওয়া আনতা তাজআলুল হাযনা ইযা শি'তা সাহলা।|হে আল্লাহ, আপনি যা সহজ করেন তা ছাড়া কিছুই সহজ নয়; আপনি চাইলে কঠিনকেও সহজ করে দেন।|ইবনে হিব্বান ৯৭৪
+#নফল রোজা
+সোম ও বৃহস্পতিবারে আমল পেশ করা হয়||| আবু হুরায়রা (রা.) থেকে বর্ণিত, নবী ﷺ বলেছেন: সোমবার ও বৃহস্পতিবার (আল্লাহর কাছে) আমলসমূহ পেশ করা হয়। আমি চাই, আমার আমল রোযা অবস্থায় পেশ করা হোক।|তিরমিযী ৭৪৭
+নবী ﷺ এই দুই দিন রোযা রাখতে চেষ্টা করতেন||| আয়েশা (রা.) বলেন, নবী ﷺ সোমবার ও বৃহস্পতিবার রোযা রাখার বিশেষ চেষ্টা করতেন।|তিরমিযী ৭৪৫; ইবনে মাজাহ ১৭৩৯
+সোমবার রোযার কারণ||| আবু কাতাদা (রা.) বলেন, সোমবারের রোযা সম্পর্কে জিজ্ঞাসা করা হলে নবী ﷺ বললেন: এই দিনে আমি জন্মগ্রহণ করেছি এবং এই দিনেই আমার উপর (প্রথম) ওহী নাযিল হয়েছে।|মুসলিম ১১৬২
+আল্লাহর পথে একদিন রোযার ফযীলত||| আবু সাঈদ খুদরী (রা.) থেকে বর্ণিত, নবী ﷺ বলেছেন: যে ব্যক্তি আল্লাহর পথে একদিন রোযা রাখে, আল্লাহ তার চেহারাকে জাহান্নাম থেকে সত্তর বছরের দূরত্বে সরিয়ে দেন।|বুখারী ২৮৪০; মুসলিম ১১৫৩
+রোযাদারের জন্য জান্নাতের বিশেষ দরজা||| সাহল ইবনে সাদ (রা.) থেকে বর্ণিত, নবী ﷺ বলেছেন: জান্নাতে ‘রাইয়ান’ নামে একটি দরজা আছে। কিয়ামতের দিন সেখান দিয়ে শুধু রোযাদাররাই প্রবেশ করবে।|বুখারী ১৮৯৬; মুসলিম ১১৫২
+#নামাজের দোয়া
+সানা (নামাজ শুরুর পর)|سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ|সুবহানাকাল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তাআলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুক।|হে আল্লাহ, আপনি পবিত্র, প্রশংসা আপনারই; আপনার নাম বরকতময়, আপনার মর্যাদা সমুচ্চ এবং আপনি ছাড়া কোনো ইলাহ নেই।|আবু দাউদ ৭৭৫; তিরমিযী ২৪২
+রুকুতে|سُبْحَانَ رَبِّيَ الْعَظِيمِ|সুবহানা রাব্বিয়াল আযীম।|আমার মহান রবের পবিত্রতা ঘোষণা করছি।|মুসলিম ৭৭২
+রুকু থেকে ওঠার সময়|سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ، رَبَّنَا وَلَكَ الْحَمْدُ|সামিআল্লাহু লিমান হামিদাহ, রাব্বানা ওয়া লাকাল হামদ।|আল্লাহ তার কথা শুনেছেন যে তাঁর প্রশংসা করেছে; হে আমাদের রব, সমস্ত প্রশংসা আপনারই।|বুখারী ৭৮৯
+সিজদায়|سُبْحَانَ رَبِّيَ الْأَعْلَى|সুবহানা রাব্বিয়াল আ'লা।|আমার সর্বোচ্চ রবের পবিত্রতা ঘোষণা করছি।|মুসলিম ৭৭২
+দুই সিজদার মাঝখানে|رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي|রাব্বিগফির লী, রাব্বিগফির লী।|হে আমার রব, আমাকে ক্ষমা করুন; হে আমার রব, আমাকে ক্ষমা করুন।|আবু দাউদ ৮৭৪; ইবনে মাজাহ ৮৯৭
+তাশাহহুদ (আত্তাহিয়্যাতু)|التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ|আত্তাহিয়্যাতু লিল্লাহি ওয়াস সালাওয়াতু ওয়াত তাইয়্যিবাত, আস-সালামু আলাইকা আইয়্যুহান নাবিয়্যু ওয়া রাহমাতুল্লাহি ওয়া বারাকাতুহ, আস-সালামু আলাইনা ওয়া আলা ইবাদিল্লাহিস সালিহীন, আশহাদু আন লা ইলাহা ইল্লাল্লাহ, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসূলুহ।|সমস্ত মৌখিক, শারীরিক ও আর্থিক ইবাদত আল্লাহর জন্য। হে নবী, আপনার উপর শান্তি, আল্লাহর রহমত ও বরকত বর্ষিত হোক। আমাদের উপর এবং আল্লাহর নেককার বান্দাদের উপর শান্তি বর্ষিত হোক। আমি সাক্ষ্য দিচ্ছি আল্লাহ ছাড়া কোনো ইলাহ নেই, এবং মুহাম্মাদ ﷺ তাঁর বান্দা ও রাসূল।|বুখারী ৮৩১; মুসলিম ৪০২
+সালামের পর ইস্তিগফার ও দোয়া|أَسْتَغْفِرُ اللَّهَ (৩ বার)، اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ|আস্তাগফিরুল্লাহ (৩ বার)। আল্লাহুম্মা আনতাস সালামু ওয়া মিনকাস সালাম, তাবারাকতা ইয়া যাল জালালি ওয়াল ইকরাম।|আমি আল্লাহর কাছে ক্ষমা চাই। হে আল্লাহ, আপনিই শান্তিময়, আপনার কাছ থেকেই শান্তি আসে; হে মহিমা ও সম্মানের অধিকারী, আপনি বরকতময়।|মুসলিম ৫৯১
+রুকুতে অতিরিক্ত দোয়া (ক্ষমা প্রার্থনা)|سُبْحَانَكَ اللَّهُمَّ رَبَّنَا وَبِحَمْدِكَ، اللَّهُمَّ اغْفِرْ لِي|সুবহানাকাল্লাহুম্মা রাব্বানা ওয়া বিহামদিকা, আল্লাহুম্মাগফির লী।|হে আল্লাহ, হে আমাদের রব, আপনি পবিত্র, প্রশংসা আপনারই; হে আল্লাহ, আমাকে ক্ষমা করুন। (আয়েশা রা. বলেন, নবী ﷺ রুকু-সিজদায় এটি বেশি পড়তেন)|বুখারী ৭৯৪; মুসলিম ৪৮৪
+রুকু ও সিজদায় (আরেকটি দোয়া)|سُبُّوحٌ قُدُّوسٌ رَبُّ الْمَلَائِكَةِ وَالرُّوحِ|সুব্বূহুন কুদ্দূসুন রাব্বুল মালাইকাতি ওয়ার রূহ।|পবিত্র, অতি পবিত্র, ফেরেশতাগণ ও জিবরীলের রব।|মুসলিম ৪৮৭
+রুকু থেকে উঠে অতিরিক্ত প্রশংসা|رَبَّنَا وَلَكَ الْحَمْدُ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ|রাব্বানা ওয়া লাকাল হামদু হামদান কাসীরান তাইয়্যিবান মুবারাকান ফীহ।|হে আমাদের রব, আপনারই প্রশংসা; অনেক, পবিত্র ও বরকতময় প্রশংসা। (এক সাহাবী এটি বললে নবী ﷺ বলেন, ত্রিশজনেরও বেশি ফেরেশতা এর সওয়াব লেখার জন্য প্রতিযোগিতা করছিল)|বুখারী ৭৯৯
+সিজদায় গুনাহ মাফের দোয়া|اللَّهُمَّ اغْفِرْ لِي ذَنْبِي كُلَّهُ، دِقَّهُ وَجِلَّهُ، وَأَوَّلَهُ وَآخِرَهُ، وَعَلَانِيَتَهُ وَسِرَّهُ|আল্লাহুম্মাগফির লী যানবী কুল্লাহু, দিক্কাহু ওয়া জিল্লাহু, ওয়া আউওয়ালাহু ওয়া আখিরাহু, ওয়া আলানিয়াতাহু ওয়া সির্রাহ।|হে আল্লাহ, আমার ছোট-বড়, আগের-পরের, প্রকাশ্য-গোপন সব গুনাহ ক্ষমা করুন। (নবী ﷺ বলেছেন, বান্দা সিজদায় তার রবের সবচেয়ে কাছে থাকে, তাই সিজদায় বেশি দোয়া করো)|মুসলিম ৪৮৩, ৪৮২
+সিজদার আরেকটি দোয়া|اللَّهُمَّ لَكَ سَجَدْتُ وَبِكَ آمَنْتُ وَلَكَ أَسْلَمْتُ، سَجَدَ وَجْهِي لِلَّذِي خَلَقَهُ وَصَوَّرَهُ وَشَقَّ سَمْعَهُ وَبَصَرَهُ، تَبَارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ|আল্লাহুম্মা লাকা সাজাদতু ওয়া বিকা আমানতু ওয়া লাকা আসলামতু, সাজাদা ওয়াজহিয়া লিল্লাযী খালাকাহু ওয়া সাওওয়ারাহু ওয়া শাক্কা সামআহু ওয়া বাসারাহু, তাবারাকাল্লাহু আহসানুল খালিকীন।|হে আল্লাহ, আপনারই জন্য সিজদা করলাম, আপনার প্রতি ঈমান আনলাম ও আপনারই কাছে আত্মসমর্পণ করলাম। আমার চেহারা তাঁর জন্য সিজদা করল, যিনি তাকে সৃষ্টি করেছেন, আকৃতি দিয়েছেন এবং কান-চোখ খুলে দিয়েছেন। সর্বোত্তম স্রষ্টা আল্লাহ বরকতময়।|মুসলিম ৭৭১
+দুই সিজদার মাঝে বিস্তারিত দোয়া|اللَّهُمَّ اغْفِرْ لِي وَارْحَمْنِي وَاهْدِنِي وَاجْبُرْنِي وَعَافِنِي وَارْزُقْنِي وَارْفَعْنِي|আল্লাহুম্মাগফির লী ওয়ারহামনী ওয়াহদিনী ওয়াজবুরনী ওয়া আফিনী ওয়ারযুকনী ওয়ারফানী।|হে আল্লাহ, আমাকে ক্ষমা করুন, রহম করুন, হিদায়াত দিন, আমার অভাব পূরণ করুন, নিরাপত্তা দিন, রিযিক দিন এবং উচ্চ মর্যাদা দিন।|আবু দাউদ ৮৫০; তিরমিযী ২৮৪
+সালামের আগে: আযাব ও ফিতনা থেকে আশ্রয়|اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ|আল্লাহুম্মা ইন্নী আঊযু বিকা মিন আযাবি জাহান্নাম, ওয়া মিন আযাবিল কবর, ওয়া মিন ফিতনাতিল মাহইয়া ওয়াল মামাত, ওয়া মিন শাররি ফিতনাতিল মাসীহিদ দাজ্জাল।|হে আল্লাহ, আমি আপনার আশ্রয় চাই জাহান্নামের আযাব, কবরের আযাব, জীবন-মৃত্যুর ফিতনা এবং মাসীহ দাজ্জালের ফিতনার অনিষ্ট থেকে। (নবী ﷺ তাশাহহুদের পর, সালামের আগে এটি পড়তে বলেছেন)|মুসলিম ৫৮৮
+সালামের আগে: আবু বকর (রা.) কে শেখানো দোয়া|اللَّهُمَّ إِنِّي ظَلَمْتُ نَفْسِي ظُلْمًا كَثِيرًا، وَلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ، فَاغْفِرْ لِي مَغْفِرَةً مِنْ عِنْدِكَ وَارْحَمْنِي، إِنَّكَ أَنْتَ الْغَفُورُ الرَّحِيمُ|আল্লাহুম্মা ইন্নী যালামতু নাফসী যুলমান কাসীরা, ওয়া লা ইয়াগফিরুয যুনূবা ইল্লা আনতা, ফাগফির লী মাগফিরাতাম মিন ইনদিকা ওয়ারহামনী, ইন্নাকা আনতাল গাফূরুর রাহীম।|হে আল্লাহ, আমি নিজের উপর অনেক যুলুম করেছি, আপনি ছাড়া গুনাহ ক্ষমা করার কেউ নেই। অতএব আপনার পক্ষ থেকে আমাকে ক্ষমা করুন ও দয়া করুন; নিশ্চয়ই আপনি ক্ষমাশীল, পরম দয়ালু।|বুখারী ৮৩৪; মুসলিম ২৭০৫
+ফরজ নামাজের পর তাসবীহ|سُبْحَانَ اللَّهِ (٣٣)، الْحَمْدُ لِلَّهِ (٣٣)، اللَّهُ أَكْبَرُ (٣٣ / ٣٤)|সুবহানাল্লাহ (৩৩ বার), আলহামদুলিল্লাহ (৩৩ বার), আল্লাহু আকবার (৩৩ বা ৩৪ বার)।|আল্লাহ পবিত্র; সমস্ত প্রশংসা আল্লাহর; আল্লাহ সর্বমহান। (নবী ﷺ প্রতি নামাজের পর এটি পড়তে শিখিয়েছেন)|মুসলিম ৫৯৬
+#নবী ﷺ এর দোয়া
+নবী ﷺ এর সবচেয়ে বেশি পঠিত দোয়া|رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ|রাব্বানা আতিনা ফিদ দুনইয়া হাসানাতাও ওয়া ফিল আখিরাতি হাসানাতাও ওয়া কিনা আযাবান নার।|হে আমাদের রব, আমাদের দুনিয়াতে কল্যাণ দিন, আখিরাতে কল্যাণ দিন এবং জাহান্নামের আযাব থেকে রক্ষা করুন। (আনাস রা. বলেন, নবী ﷺ এর অধিকাংশ দোয়া ছিল এটি)|বুখারী ৬৩৮৯; মুসলিম ২৬৯০
+অন্তর দ্বীনের উপর অটল রাখার দোয়া|يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ|ইয়া মুকাল্লিবাল কুলূব, সাব্বিত কালবী আলা দীনিক।|হে অন্তরসমূহের পরিবর্তনকারী, আমার অন্তরকে আপনার দ্বীনের উপর অবিচল রাখুন। (উম্মে সালামা রা. বলেন, নবী ﷺ প্রায়ই এ দোয়া করতেন)|তিরমিযী ২১৪০
+হিদায়াত, তাকওয়া ও স্বাবলম্বিতার দোয়া|اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى|আল্লাহুম্মা ইন্নী আসআলুকাল হুদা ওয়াত তুকা ওয়াল আফাফা ওয়াল গিনা।|হে আল্লাহ, আমি আপনার কাছে হিদায়াত, তাকওয়া, পবিত্রতা (চারিত্রিক সংযম) ও অভাবমুক্ততা চাই। (নবী ﷺ এই দোয়া করতেন)|মুসলিম ২৭২১
+ক্ষমা চাওয়ার দোয়া (লাইলাতুল কদর)|اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي|আল্লাহুম্মা ইন্নাকা আফুউউন তুহিব্বুল আফওয়া ফা'ফু আন্নী।|হে আল্লাহ, আপনি ক্ষমাশীল, ক্ষমা করতে ভালোবাসেন; অতএব আমাকে ক্ষমা করুন। (আয়েশা রা. জিজ্ঞাসা করলে নবী ﷺ লাইলাতুল কদরে এটি পড়তে শিখিয়েছেন)|তিরমিযী ৩৫১৩; ইবনে মাজাহ ৩৮৫০
+আল্লাহর যিকির ও ইবাদতে সাহায্যের দোয়া|اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ|আল্লাহুম্মা আইন্নী আলা যিকরিকা ওয়া শুকরিকা ওয়া হুসনি ইবাদাতিক।|হে আল্লাহ, আপনার যিকির, শুকরিয়া ও সুন্দরভাবে ইবাদত করার জন্য আমাকে সাহায্য করুন। (নবী ﷺ মুআয রা. কে প্রতি নামাজের পর এটি পড়তে উপদেশ দেন)|আবু দাউদ ১৫২২; নাসাঈ ১৩০২
+দুশ্চিন্তা ও ঋণ থেকে আশ্রয়ের দোয়া|اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ وَالْبُخْلِ وَالْجُبْنِ وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ|আল্লাহুম্মা ইন্নী আঊযু বিকা মিনাল হাম্মি ওয়াল হাযান, ওয়াল আজযি ওয়াল কাসাল, ওয়াল বুখলি ওয়াল জুবন, ওয়া দালাইদ দাইনি ওয়া গালাবাতির রিজাল।|হে আল্লাহ, আমি আপনার কাছে আশ্রয় চাই দুশ্চিন্তা, দুঃখ, অক্ষমতা, অলসতা, কৃপণতা, ভীরুতা, ঋণের বোঝা এবং মানুষের চাপ থেকে। (আনাস রা. বলেন, নবী ﷺ প্রায়ই এ দোয়া করতেন)|বুখারী ২৮৯৩, ৬৩৬৯
+ইউনুস (আ.) এর দোয়া, যা নবী ﷺ শিখিয়েছেন|لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ|লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নী কুনতু মিনায যালিমীন।|আপনি ছাড়া কোনো ইলাহ নেই, আপনি পবিত্র; নিশ্চয়ই আমি যালিমদের অন্তর্ভুক্ত ছিলাম। (নবী ﷺ বলেছেন: কোনো মুসলিম এ দিয়ে দোয়া করলে আল্লাহ তা কবুল করেন)|তিরমিযী ৩৫০৫
+সার্বক্ষণিক রহমত ও ইসলাহের দোয়া|اللَّهُمَّ رَحْمَتَكَ أَرْجُو فَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ وَأَصْلِحْ لِي شَأْنِي كُلَّهُ لَا إِلَهَ إِلَّا أَنْتَ|আল্লাহুম্মা রাহমাতাকা আরজূ, ফালা তাকিলনী ইলা নাফসী তারফাতা আইন, ওয়া আসলিহ লী শা'নী কুল্লাহু, লা ইলাহা ইল্লা আনতা।|হে আল্লাহ, আমি আপনার রহমতের আশা করি। এক পলকের জন্যও আমাকে আমার নিজের উপর ছেড়ে দেবেন না; আমার সব কাজ সংশোধন করে দিন। আপনি ছাড়া কোনো ইলাহ নেই। (নবী ﷺ এটি সকাল-সন্ধ্যায় পড়তে শিখিয়েছেন)|আবু দাউদ ৫০৯০
+সাইয়্যিদুল ইস্তিগফার (ক্ষমা প্রার্থনার শ্রেষ্ঠ দোয়া)|اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ|আল্লাহুম্মা আনতা রাব্বী লা ইলাহা ইল্লা আনতা, খালাকতানী ওয়া আনা আবদুকা, ওয়া আনা আলা আহদিকা ওয়া ওয়াদিকা মাসতাতাতু, আঊযু বিকা মিন শাররি মা সানাতু, আবূউ লাকা বিনি'মাতিকা আলাইয়্যা, ওয়া আবূউ বিযানবী, ফাগফির লী ফা ইন্নাহু লা ইয়াগফিরুয যুনূবা ইল্লা আনতা।|হে আল্লাহ, আপনি আমার রব, আপনি ছাড়া কোনো ইলাহ নেই; আপনি আমাকে সৃষ্টি করেছেন, আমি আপনার বান্দা; যথাসাধ্য আপনার অঙ্গীকারে আছি। আমি যা করেছি তার অনিষ্ট থেকে আপনার আশ্রয় চাই। আপনার নিয়ামত স্বীকার করছি এবং নিজের গুনাহ স্বীকার করছি; আমাকে ক্ষমা করুন, কারণ আপনি ছাড়া গুনাহ ক্ষমা করার কেউ নেই। (নবী ﷺ বলেছেন, দিনে বিশ্বাসের সাথে পড়ে সন্ধ্যার আগে মারা গেলে জান্নাতী)|বুখারী ৬৩০৬
+দ্বীন, দুনিয়া ও আখিরাত সংশোধনের দোয়া|اللَّهُمَّ أَصْلِحْ لِي دِينِي الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي، وَأَصْلِحْ لِي آخِرَتِي الَّتِي فِيهَا مَعَادِي، وَاجْعَلِ الْحَيَاةَ زِيَادَةً لِي فِي كُلِّ خَيْرٍ، وَاجْعَلِ الْمَوْتَ رَاحَةً لِي مِنْ كُلِّ شَرٍّ|আল্লাহুম্মা আসলিহ লী দীনিয়াল্লাযী হুওয়া ইসমাতু আমরী, ওয়া আসলিহ লী দুনইয়ায়াল্লাতী ফীহা মা'আশী, ওয়া আসলিহ লী আখিরাতিয়াল্লাতী ফীহা মা'আদী, ওয়াজআলিল হায়াতা যিয়াদাতান লী ফী কুল্লি খাইর, ওয়াজআলিল মাওতা রাহাতান লী মিন কুল্লি শার।|হে আল্লাহ, আমার দ্বীনকে সংশোধন করে দিন, যা আমার সব কাজের রক্ষাকবচ; আমার দুনিয়া সংশোধন করুন, যেখানে আমার জীবিকা; আমার আখিরাত সংশোধন করুন, যেখানে আমার প্রত্যাবর্তন। জীবনকে সব কল্যাণ বৃদ্ধির উপায় করুন এবং মৃত্যুকে সব অকল্যাণ থেকে শান্তির উপায় করুন।|মুসলিম ২৭২০
+দুনিয়া ও আখিরাতে নিরাপত্তার দোয়া|اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ|আল্লাহুম্মা ইন্নী আসআলুকাল আফিয়াতা ফিদ দুনইয়া ওয়াল আখিরাহ।|হে আল্লাহ, আমি আপনার কাছে দুনিয়া ও আখিরাতে নিরাপত্তা ও সুস্থতা চাই। (নবী ﷺ সকাল-সন্ধ্যায় এই দোয়া ছাড়তেন না)|আবু দাউদ ৫০৭৪; ইবনে মাজাহ ৩৮৭১
+অনুপকারী ইলম ও অন্তর থেকে আশ্রয়|اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عِلْمٍ لَا يَنْفَعُ، وَمِنْ قَلْبٍ لَا يَخْشَعُ، وَمِنْ نَفْسٍ لَا تَشْبَعُ، وَمِنْ دَعْوَةٍ لَا يُسْتَجَابُ لَهَا|আল্লাহুম্মা ইন্নী আঊযু বিকা মিন ইলমিল লা ইয়ানফা'উ, ওয়া মিন কালবিল লা ইয়াখশা'উ, ওয়া মিন নাফসিল লা তাশবা'উ, ওয়া মিন দাওয়াতিল লা ইউসতাজাবু লাহা।|হে আল্লাহ, আমি আপনার আশ্রয় চাই এমন ইলম থেকে যা উপকার করে না, এমন অন্তর থেকে যা বিনয়ী হয় না, এমন নফস থেকে যা তৃপ্ত হয় না এবং এমন দোয়া থেকে যা কবুল হয় না।|মুসলিম ২৭২২
+তাকওয়া ও আত্মশুদ্ধির দোয়া|اللَّهُمَّ آتِ نَفْسِي تَقْوَاهَا وَزَكِّهَا أَنْتَ خَيْرُ مَنْ زَكَّاهَا أَنْتَ وَلِيُّهَا وَمَوْلَاهَا|আল্লাহুম্মা আতি নাফসী তাকওয়াহা, ওয়া যাক্কিহা আনতা খাইরু মান যাক্কাহা, আনতা ওয়ালিইয়্যুহা ওয়া মাওলাহা।|হে আল্লাহ, আমার নফসকে তাকওয়া দান করুন এবং তাকে পবিত্র করুন; আপনি তাকে পবিত্রকারীদের মধ্যে শ্রেষ্ঠ; আপনিই তার অভিভাবক ও মনিব।|মুসলিম ২৭২২
+উপকারী ইলমের দোয়া|اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي وَعَلِّمْنِي مَا يَنْفَعُنِي وَزِدْنِي عِلْمًا|আল্লাহুম্মান ফা'নী বিমা আল্লামতানী, ওয়া আল্লিমনী মা ইয়ানফাউনী, ওয়া যিদনী ইলমা।|হে আল্লাহ, আপনি আমাকে যা শিখিয়েছেন তা দ্বারা আমাকে উপকৃত করুন, যা আমার উপকারে আসে তা শেখান এবং আমার জ্ঞান বাড়িয়ে দিন।|তিরমিযী ৩৫৯৯; ইবনে মাজাহ ২৫১
+আনুগত্যের দিকে অন্তর ফেরানোর দোয়া|اللَّهُمَّ مُصَرِّفَ الْقُلُوبِ صَرِّفْ قُلُوبَنَا عَلَى طَاعَتِكَ|আল্লাহুম্মা মুসারিফাল কুলূবি সারিফ কুলূবানা আলা তাআতিক।|হে অন্তরসমূহের পরিচালক আল্লাহ, আমাদের অন্তরগুলো আপনার আনুগত্যের দিকে ফিরিয়ে দিন।|মুসলিম ২৬৫৪
+তাওবার দোয়া (নবী ﷺ একই মজলিসে একশ বার পড়তেন)|رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ|রাব্বিগফির লী ওয়া তুব আলাইয়্যা, ইন্নাকা আনতাত তাওওয়াবুর রাহীম।|হে আমার রব, আমাকে ক্ষমা করুন এবং আমার তাওবা কবুল করুন; নিশ্চয়ই আপনি তাওবা কবুলকারী, পরম দয়ালু। (ইবনে উমর রা. বলেন, আমরা নবী ﷺ এর এক মজলিসে এটি একশবার গণনা করতাম)|আবু দাউদ ১৫১৬; তিরমিযী ৩৪৩৪
+জান্নাত চাওয়া ও জাহান্নাম থেকে আশ্রয়|اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ|আল্লাহুম্মা ইন্নী আসআলুকাল জান্নাহ, ওয়া আঊযু বিকা মিনান নার।|হে আল্লাহ, আমি আপনার কাছে জান্নাত চাই এবং জাহান্নাম থেকে আপনার আশ্রয় চাই। (নবী ﷺ বলেছেন, এটি আমার ও মুআযের গুনগুন দোয়ার চেয়েও বড় করে দেখো)|আবু দাউদ ৭৯২; ইবনে মাজাহ ৯১০
+`;
+var dsec=0,DS=null;
+function duaParse(){
+  if(DS)return DS;DS=[];
+  DUA.split('\n').forEach(function(l){
+    l=l.trim();if(!l)return;
+    if(l.charAt(0)==='#'){DS.push({n:l.slice(1),it:[]});return}
+    var f=l.split('|'),c=DS[DS.length-1];
+    c.it.push(DS.length===1?{ar:f[0],tr:f[1],m:f[2]}:{t:f[0],ar:f[1],tr:f[2],m:f[3],r:f[4]});
+  });
+  return DS;
+}
+function viewDua(){
+  var S=duaParse(),h='<div lang="bn" translate="no"><div class="dsec">';
+  S.forEach(function(x,i){h+='<button data-dsec="'+i+'" aria-pressed="'+(i===dsec?'true':'false')+'">'+H(x.n)+'</button>'});
+  h+='</div>';
+  S[dsec].it.forEach(function(d,i){
+    h+='<div class="dc">'+(d.t?'<div class="dt">'+H(d.t)+'</div>':(dsec===0?'<span class="no">'+(i+1)+'</span>':''))+
+    (d.ar?'<div class="ar" lang="ar">'+H(d.ar)+'</div>':'')+
+    (d.tr?'<div class="tr">'+H(d.tr)+'</div>':'')+
+    '<div class="mn">'+(dsec===0||d.ar?'অর্থ: ':'হাদিস: ')+H(d.m)+'</div>'+
+    (d.r?'<div class="rf">সূত্র: '+H(d.r)+'</div>':'')+'</div>';
+  });
+  return h+'</div>';
+}
+
+function sumTotals(){return draft.reduce(function(a,g){return a+(+g.total||0)},0)}
+function sumTxt(){var x=sumTotals();return 'Sections total: '+fmtP(x)+'%'+(Math.abs(x-100)<0.05?' ✓':' (must be 100%)')}
+function sumCls(){return 'small '+(Math.abs(sumTotals()-100)<0.05?'sok':'sbad')}
+function viewEdit(){
+  var h='<section class="card" style="margin-top:6px"><h3>Edit items</h3><p class="small">Each section keeps its total %. When you add or delete an item, that section&#39;s % is shared equally among its items (for example, Namaz 40% split across 6 prayers is 6.7% each). A higher "Weight" gives an item a bigger share. Changes apply from today; earlier days keep their scores.</p><p class="small" style="margin-top:8px">You can set each section&#39;s total % yourself (all sections must add up to 100%), and choose the exact days each item counts.</p><p class="'+sumCls()+'" id="sumTot" style="font-weight:600">'+sumTxt()+'</p></section>';
+  draft.forEach(function(g,gi){
+    var sw=sumw(g);
+    h+='<section class="card"><div class="gh"><input class="inp gname" data-gi="'+gi+'" data-f="gname" value="'+H(g.name)+'" aria-label="Section name" maxlength="40"><label class="gt">Total <input class="inp gtot" type="number" inputmode="decimal" min="0" max="100" step="0.5" data-gi="'+gi+'" data-f="gtot" value="'+fmtP(g.total)+'" aria-label="Section total percent"> %</label></div>';
+    g.items.forEach(function(it,ii){
+      var p=sw?g.total*it.w/sw:0,mt=!!(it.days&&it.days.length);
+      h+='<div class="erow"><div class="e1"><input class="inp" data-gi="'+gi+'" data-ii="'+ii+'" data-f="n" value="'+H(it.n)+'" aria-label="Item name" maxlength="60"><span class="ep">'+fmtP(p)+'%</span></div>'+
+      '<div class="e2"><label>Weight <select data-gi="'+gi+'" data-ii="'+ii+'" data-f="w" aria-label="Weight">'+[1,2,3,4].map(function(v){return '<option value="'+v+'"'+(it.w===v?' selected':'')+'>'+v+'x</option>'}).join('')+'</select></label>'+
+      '<div class="days"><span>Days:</span>'+ENDAY.map(function(nm,di){return '<button class="dbtn" data-act="day" data-gi="'+gi+'" data-ii="'+ii+'" data-d="'+di+'" aria-pressed="'+(!it.days||it.days.indexOf(di)>=0)+'">'+nm+'</button>'}).join('')+'</div>'+
+      '<button class="btn sec del" data-act="del" data-gi="'+gi+'" data-ii="'+ii+'"'+(g.items.length<2?' disabled':'')+'>Delete</button></div></div>';
+    });
+    h+='<button class="btn sec full" data-act="add" data-gi="'+gi+'"'+(g.items.length>=MAXI?' disabled':'')+'>+ Add item</button></section>';
+  });
+  h+='<button class="btn" data-act="saveedit">Save</button><button class="btn sec full" data-act="canceledit">Cancel</button>';
+  return h;
+}
+
+function render(){
+  var main=$('#main'),tabs=$('#tabs'),pill=$('#pill'),eb=$('#editBtn');
+  if(editing&&draft){main.innerHTML=viewEdit();tabs.hidden=true;pill.hidden=true;eb.hidden=true;return}
+  if(!meta){main.innerHTML=viewStart();tabs.hidden=true;pill.hidden=true;eb.hidden=true;return}
+  var t=today(),di=dayDiff(meta.start,t);
+  if(di>=N)di=N-1;
+  if(!sel||sel>t||dayDiff(meta.start,sel)<0||dayDiff(meta.start,sel)>=N)sel=t>addDays(meta.start,N-1)?addDays(meta.start,N-1):t;
+  pill.textContent='Cycle '+meta.cycle+' · Day '+(di+1)+'/'+N;pill.hidden=false;tabs.hidden=false;eb.hidden=false;
+  tabs.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===tab?'true':'false')});
+  main.innerHTML=tab==='cal'?viewCal():tab==='report'?viewReport():tab==='dua'?viewDua():viewToday();eb.hidden=tab==='dua';
+}
+
+/* ---------- actions ---------- */
+function toggle(k){
+  var date=sel,t=today();
+  if(date>t||dayDiff(meta.start,date)<0)return;
+  var c=Object.assign({},checks(date));
+  if(c[k])delete c[k];else c[k]=true;
+  docs['day-'+date]={d:date,c:c};
+  persist();render();
+}
+function begin(){meta={start:today(),cycle:1};docs.meta=meta;sel=today();persist();render()}
+function maybeRollover(){
+  if(!meta||dayDiff(meta.start,today())<N)return;
+  var cur=meta,guard=0,i,lastDone=null;
+  while(dayDiff(cur.start,today())>=N&&guard++<30){
+    var days=[];
+    for(i=0;i<N;i++)days.push(Array.from(setOf(addDays(cur.start,i))).join(','));
+    docs['cycle-'+cur.cycle]={n:cur.cycle,start:cur.start,end:addDays(cur.start,N-1),days:days};
+    for(i=0;i<N;i++)delete docs['day-'+addDays(cur.start,i)];
+    banner=cur.cycle;lastDone=cur.cycle;
+    cur={start:addDays(cur.start,N),cycle:cur.cycle+1};
+  }
+  meta=cur;docs.meta=cur;persist();tab='today';sel=today();render();
+  if(lastDone!==null&&docs.settings&&docs.settings.auto){
+    try{var inf=cycleInfoArchive(lastDone);if(inf)directDownload(buildPdf(inf),'izzatdaar-cycle-'+lastDone+'-main-report.pdf')}catch(e){}
+  }
+}
+
+/* ---------- edit mode ---------- */
+function startEdit(){draft=clone(cfgFor(today()));editing=true;render();window.scrollTo(0,0)}
+function saveEdit(){
+  var sm=sumTotals();if(Math.abs(sm-100)>0.05){toast('Section totals must add up to 100% (now '+fmtP(sm)+'%)');return}
+  draft.forEach(function(g){g.name=(g.name||'').trim()||'Section';g.items.forEach(function(it){it.n=(it.n||'').trim()||'Item'})});
+  var t=today(),h=(docs.cfg&&docs.cfg.length?docs.cfg:[{from:'0000-00-00',g:clone(DEF)}]).filter(function(e){return e.from!==t});
+  h.push({from:t,g:clone(draft)});
+  h.sort(function(a,b){return a.from<b.from?-1:a.from>b.from?1:0});
+  docs.cfg=h;persist();editing=false;draft=null;render();window.scrollTo(0,0);
+  toast('Saved. Applies from today.');
+}
+function newKey(){return 'c'+Date.now().toString(36)+Math.floor(Math.random()*1296).toString(36)}
+
+/* ---------- PDF writer: pages are drawn on a canvas, so Bengali text works ---------- */
+var CW=1240,CH=1754,SC=CW/210;
+function rgb(c){return 'rgb('+c[0]+','+c[1]+','+c[2]+')'}
+function PDF(){this.pages=[];this.addPage()}
+PDF.prototype.addPage=function(){
+  var c=document.createElement('canvas');c.width=CW;c.height=CH;
+  var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,CW,CH);x.textBaseline='alphabetic';
+  this.cv=c;this.cx=x;this.pages.push(c);
+};
+PDF.prototype.font=function(size,bold){this.cx.font=(bold?'700 ':'400 ')+(size*2.083).toFixed(1)+'px "Noto Sans Bengali",system-ui,-apple-system,"Segoe UI",sans-serif'};
+PDF.prototype.width=function(s,size,bold){this.font(size,bold);return this.cx.measureText(s).width/SC};
+PDF.prototype.fit=function(s,maxMm,size,bold){
+  if(this.width(s,size,bold)<=maxMm)return s;
+  while(s.length>1&&this.width(s+'...',size,bold)>maxMm)s=s.slice(0,-1);
+  return s+'...';
+};
+PDF.prototype.text=function(x,y,s,size,bold,c,align){
+  this.font(size,bold);this.cx.fillStyle=rgb(c||[0,0,0]);this.cx.textAlign=align||'left';
+  this.cx.fillText(s,x*SC,y*SC);
+};
+PDF.prototype.rect=function(x,y,w,h,fill,stroke){
+  var cx=this.cx;
+  if(fill){cx.fillStyle=rgb(fill);cx.fillRect(x*SC,y*SC,w*SC,h*SC)}
+  if(stroke){cx.strokeStyle=rgb(stroke);cx.lineWidth=1.5;cx.strokeRect(x*SC,y*SC,w*SC,h*SC)}
+};
+PDF.prototype.line=function(x1,y1,x2,y2,c){var cx=this.cx;cx.strokeStyle=rgb(c);cx.lineWidth=1.2;cx.beginPath();cx.moveTo(x1*SC,y1*SC);cx.lineTo(x2*SC,y2*SC);cx.stroke()};
+function concat(parts){
+  var n=0,i;for(i=0;i<parts.length;i++)n+=parts[i].length;
+  var u=new Uint8Array(n),o=0;for(i=0;i<parts.length;i++){u.set(parts[i],o);o+=parts[i].length}
+  return u;
+}
+PDF.prototype.output=function(){
+  var enc=new TextEncoder(),parts=[],offs={},len=0,np=this.pages.length,i;
+  function add(u){parts.push(u);len+=u.length}
+  function str(s){add(enc.encode(s))}
+  function obj(id,head,stream){
+    offs[id]=len;
+    if(stream){str(id+' 0 obj\n'+head.replace('LEN',stream.length)+'\nstream\n');add(stream);str('\nendstream\nendobj\n')}
+    else str(id+' 0 obj\n'+head+'\nendobj\n');
+  }
+  str('%PDF-1.4\n');
+  var kids=[];for(i=0;i<np;i++)kids.push((5+3*i)+' 0 R');
+  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  obj(2,'<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+np+' >>');
+  for(i=0;i<np;i++){
+    var b64=this.pages[i].toDataURL('image/jpeg',0.82).split(',')[1],bin=atob(b64),jpg=new Uint8Array(bin.length);
+    for(var j=0;j<bin.length;j++)jpg[j]=bin.charCodeAt(j);
+    var im=3+3*i,ct=4+3*i,pg=5+3*i,cs=enc.encode('q 595.28 0 0 841.89 0 0 cm /Im0 Do Q');
+    obj(im,'<< /Type /XObject /Subtype /Image /Width '+CW+' /Height '+CH+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length LEN >>',jpg);
+    obj(ct,'<< /Length LEN >>',cs);
+    obj(pg,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 '+im+' 0 R >> >> /Contents '+ct+' 0 R >>');
+  }
+  var total=3+3*np,xr=len,x='xref\n0 '+total+'\n0000000000 65535 f \n';
+  for(i=1;i<total;i++)x+=String(offs[i]).padStart(10,'0')+' 00000 n \n';
+  str(x+'trailer\n<< /Size '+total+' /Root 1 0 R >>\nstartxref\n'+xr+'\n%%EOF');
+  return concat(parts);
+};
+
+var GREEN=[14,107,82],DK=[19,36,29],GR=[110,110,110];
+function col3(s){return s>=80?GREEN:s>=50?[168,116,26]:[178,74,48]}
+
+function buildPdf(info){
+  var d=new PDF(),W=210,M=16,y=M,sm=summarize(info),N2=info.days.length;
+  d.text(M,y+6,'IZZATDAAR',22,true,GREEN);
+  d.text(M,y+14,'41-Day Main Report  |  Cycle '+info.n+(info.partial?'  (in progress)':''),12,false,[60,60,60]);
+  d.text(M,y+20,fmt(info.start)+' - '+fmt(addDays(info.start,N-1)),10,false,GR);
+  y+=30;
+  var stats=[['Average',sm.avg+'%'],['Best day',sm.best+'%'],['Days 80%+',String(sm.hi)],['Days logged',N2+' / '+N]],bw=(W-2*M-9)/4;
+  stats.forEach(function(s,i){var x=M+i*(bw+3);d.rect(x,y,bw,18,null,[210,218,213]);d.text(x+4,y+9,s[1],15,true,DK);d.text(x+4,y+14.5,s[0],8.5,false,[100,100,100])});
+  y+=26;
+  var ch=34,cw=W-2*M;
+  d.text(M,y,'Daily score',8,false,[120,120,120]);y+=3;
+  [0,50,100].forEach(function(v){var gy=y+ch-ch*v/100;d.line(M,gy,M+cw,gy,[225,230,227]);d.text(M-2,gy+1,String(v),7,false,[120,120,120],'right')});
+  var slot=cw/N;
+  info.days.forEach(function(dd,i){var s=sm.scores[i],hh=Math.max(0.4,ch*s/100);d.rect(M+i*slot+slot*0.12,y+ch-hh,slot*0.76,hh,col3(s))});
+  y+=ch+10;
+  function head(){d.rect(M,y-4.5,W-2*M,6.5,[238,242,239]);d.text(M+2,y,'Day',8.5,true,DK);d.text(M+16,y,'Date',8.5,true,DK);d.text(M+50,y,'Score',8.5,true,DK);d.text(M+68,y,'Missed',8.5,true,DK);y+=6.5}
+  head();
+  info.days.forEach(function(dd,i){
+    if(y>284){d.addPage();y=M+4;head()}
+    var r=calc(dd.date,dd.keys),miss=flat(dd.date).filter(function(it){return applies(it,dd.date)&&!dd.keys.has(it.k)}).map(function(it){return it.n}).join(', ');
+    d.text(M+2,y,String(i+1),8,false,DK);
+    d.text(M+16,y,fmtS(dd.date)+' '+ENDAY[parse(dd.date).getDay()],8,false,DK);
+    d.text(M+50,y,r.score+'%',8,true,col3(r.score));
+    d.text(M+68,y,d.fit(miss||'-',W-M-(M+68),8),8,false,GR);
+    y+=5.2;
+  });
+  y+=8;
+  if(y>250){d.addPage();y=M+4}
+  d.text(M,y,'Item-wise completion',11,true,DK);y+=7;
+  itemStats(info).forEach(function(it){
+    if(y>285){d.addPage();y=M+4}
+    var pc=Math.round(it.done/it.poss*100);
+    d.text(M+2,y,d.fit(it.n+' ('+fmtP(it.p)+'%)',56,8.5),8.5,false,DK);
+    d.rect(M+60,y-3,70,3.2,[225,230,227]);d.rect(M+60,y-3,Math.max(0.3,70*pc/100),3.2,col3(pc));
+    d.text(M+134,y,it.done+'/'+it.poss+'  ('+pc+'%)',8.5,false,GR);y+=6.2;
+  });
+  d.text(M,291,'Generated '+fmt(today()),8,false,[150,150,150]);
+  return d.output();
+}
+
+function cycleOf(date){
+  if(meta){var i=dayDiff(meta.start,date);if(i>=0&&i<N)return {n:meta.cycle,i:i}}
+  var cs=cycles();
+  for(var k=0;k<cs.length;k++){var j=dayDiff(cs[k].start,date);if(j>=0&&j<N)return {n:cs[k].n,i:j}}
+  return null;
+}
+function buildDayPdf(date){
+  var d=new PDF(),W=210,M=16,y=M,set=setOf(date),r=calc(date,set),dt=parse(date),cy=cycleOf(date),items=flat(date);
+  d.text(M,y+6,'IZZATDAAR',22,true,GREEN);
+  d.text(M,y+14,'Daily Report  |  '+ENDAY[dt.getDay()]+', '+fmt(date),12,false,[60,60,60]);
+  if(cy)d.text(M,y+20,'Cycle '+cy.n+'  |  Day '+(cy.i+1)+' of '+N,10,false,GR);
+  y+=32;
+  var c=col3(r.score);
+  d.text(M,y+10,r.score+'%',40,true,c);
+  d.text(M+46,y+3,'Izzatdaar score',10,false,GR);
+  d.text(M+46,y+9,r.done+' of '+r.tot+' items completed',10,false,DK);
+  d.rect(M,y+15,W-2*M,3.4,[225,230,227]);d.rect(M,y+15,Math.max(0.3,(W-2*M)*r.score/100),3.4,c);
+  y+=30;
+  cfgFor(date).forEach(function(g){
+    var its=items.filter(function(i){return i.g===g.id});
+    if(y>270){d.addPage();y=M+4}
+    d.rect(M,y-4.5,W-2*M,6.8,[238,242,239]);
+    d.text(M+2,y,d.fit(g.name,120,9.5,true),9.5,true,DK);
+    d.text(W-M-2,y,fmtP(g.total)+'%',9.5,true,DK,'right');
+    y+=7.5;
+    its.forEach(function(it){
+      if(y>284){d.addPage();y=M+4}
+      var on=applies(it,date),dn=on&&set.has(it.k);
+      d.text(M+3,y,d.fit(it.n,110,9),9,false,on?DK:GR);
+      d.text(M+130,y,fmtP(it.p)+'%',9,false,GR,'right');
+      d.text(M+W-2*M-2,y,!on?'Not today':dn?'Done':'Missed',9,true,!on?GR:dn?GREEN:[178,74,48],'right');
+      d.line(M,y+1.8,W-M,y+1.8,[236,240,237]);
+      y+=6.2;
+    });
+    y+=4;
+  });
+  d.text(M,291,'Generated '+fmt(today()),8,false,[150,150,150]);
+  return d.output();
+}
+
+/* ---------- ZIP (stored, no compression) ---------- */
+var crcT=null;
+function crc32(u){
+  if(!crcT){crcT=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;crcT[n]=c>>>0}}
+  var c2=0xFFFFFFFF;for(var i=0;i<u.length;i++)c2=crcT[(c2^u[i])&255]^(c2>>>8);
+  return (c2^0xFFFFFFFF)>>>0;
+}
+function zip(files){
+  var enc=new TextEncoder(),parts=[],cd=[],off=0;
+  files.forEach(function(f){
+    var nm=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+    var h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(6,0x0800,true);h.setUint16(12,0x21,true);
+    h.setUint32(14,crc,true);h.setUint32(18,sz,true);h.setUint32(22,sz,true);h.setUint16(26,nm.length,true);
+    parts.push(new Uint8Array(h.buffer),nm,f.data);
+    var c=new DataView(new ArrayBuffer(46));
+    c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(8,0x0800,true);c.setUint16(14,0x21,true);
+    c.setUint32(16,crc,true);c.setUint32(20,sz,true);c.setUint32(24,sz,true);c.setUint16(28,nm.length,true);c.setUint32(42,off,true);
+    cd.push(new Uint8Array(c.buffer),nm);
+    off+=30+nm.length+sz;
+  });
+  var cl=0;cd.forEach(function(p){cl+=p.length});
+  var e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,cl,true);e.setUint32(16,off,true);
+  return concat(parts.concat(cd,[new Uint8Array(e.buffer)]));
+}
+function dayFiles(start,count){
+  var out=[];
+  for(var i=0;i<count;i++){var date=addDays(start,i);out.push({name:'izzatdaar-'+date+'.pdf',data:buildDayPdf(date)})}
+  return out;
+}
+
+/* ---------- saving files ---------- */
+function directDownload(bytes,name){
+  var blob=new Blob([bytes],{type:name.slice(-4)==='.zip'?'application/zip':'application/pdf'});
+  var url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url)},4000);
+}
+function saveFile(bytes,name,type){
+  var blob=new Blob([bytes],{type:type});
+  try{
+    var f=new File([blob],name,{type:type});
+    if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){
+      navigator.share({files:[f],title:name}).catch(function(){});
+      toast('Choose "Save to Files" or Drive from the share menu');
+      return;
+    }
+  }catch(e){}
+  directDownload(bytes,name);
+  toast('Downloading file: '+name);
+}
+function later(msg,fn){toast(msg);setTimeout(function(){try{fn()}catch(e){toast('Could not create the file')}},40)}
+function savePdfBytes(make,name){later('Creating PDF…',function(){saveFile(make(),name,'application/pdf')})}
+function exportBackup(){
+  var b=new TextEncoder().encode(JSON.stringify({app:'izzatdaar',v:2,docs:docs}));
+  saveFile(b,'izzatdaar-backup-'+today()+'.json','application/json');
+}
+$('#importFile').addEventListener('change',function(e){
+  var f=e.target.files&&e.target.files[0];if(!f)return;
+  var rd=new FileReader();
+  rd.onload=function(){
+    try{
+      var o=JSON.parse(rd.result);
+      if(!o||o.app!=='izzatdaar'||!o.docs||typeof o.docs!=='object')throw 0;
+      docs=o.docs;meta=docs.meta||null;sel=null;editing=false;persist();render();maybeRollover();toast('Backup restored');
+    }catch(x){toast('This is not an Izzatdaar backup file')}
+    e.target.value='';
+  };
+  rd.readAsText(f);
+});
+
+/* ---------- automatic daily download attempt ---------- */
+function autoRun(){
+  if(!meta||!docs.settings||!docs.settings.auto)return;
+  var y=addDays(today(),-1),last=docs.settings.last||y;
+  if(last>=y)return;
+  var cs=cycles(),earliest=meta.start;
+  cs.forEach(function(c){if(c.start<earliest)earliest=c.start});
+  var dates=[];
+  for(var d=addDays(last,1);d<=y&&dates.length<N;d=addDays(d,1))if(d>=earliest)dates.push(d);
+  docs.settings.last=y;persist();
+  if(!dates.length)return;
+  try{
+    if(dates.length===1)directDownload(buildDayPdf(dates[0]),'izzatdaar-'+dates[0]+'.pdf');
+    else directDownload(zip(dates.map(function(dt){return {name:'izzatdaar-'+dt+'.pdf',data:buildDayPdf(dt)}})),'izzatdaar-reports-'+dates[0]+'-to-'+dates[dates.length-1]+'.zip');
+  }catch(e){}
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-tab],[data-k],[data-date],[data-act],[data-dsec]');if(!el||el.disabled)return;
+  if(el.dataset.tab){tab=el.dataset.tab;render();window.scrollTo(0,0);return}
+  if(el.dataset.dsec!==undefined){if(meta){dsec=+el.dataset.dsec;render();window.scrollTo(0,0)}return}
+  var a=el.dataset.act;
+  if(!meta&&a!=='begin')return;
+  if(el.dataset.k){toggle(el.dataset.k);return}
+  if(el.dataset.date&&!a){sel=el.dataset.date;tab='today';render();window.scrollTo(0,0);return}
+  if(a==='begin')begin();
+  else if(a==='gotoday'){sel=today();render()}
+  else if(a==='edit')startEdit();
+  else if(a==='canceledit'){editing=false;draft=null;render();window.scrollTo(0,0)}
+  else if(a==='saveedit')saveEdit();
+  else if(a==='add'){
+    var g=draft[+el.dataset.gi];
+    if(g.items.length<MAXI){g.items.push({k:newKey(),n:'New item',w:1});render();
+      var ins=document.querySelectorAll('input[data-gi="'+el.dataset.gi+'"][data-f="n"]'),last=ins[ins.length-1];
+      if(last){last.focus();last.select()}}
+  }
+  else if(a==='day'){
+    var gg=draft[+el.dataset.gi],it2=gg&&gg.items[+el.dataset.ii];
+    if(it2){var dn=+el.dataset.d,cur=it2.days?it2.days.slice():[0,1,2,3,4,5,6],ix=cur.indexOf(dn);
+      if(ix>=0){if(cur.length>1)cur.splice(ix,1);else toast('Keep at least one day')}else cur.push(dn);
+      cur.sort();if(cur.length===7)delete it2.days;else it2.days=cur;render()}
+  }
+  else if(a==='del'){var g2=draft[+el.dataset.gi];if(g2.items.length>1){g2.items.splice(+el.dataset.ii,1);render()}}
+  else if(a==='pdfday'){var dd=el.dataset.date;savePdfBytes(function(){return buildDayPdf(dd)},'izzatdaar-'+dd+'.pdf')}
+  else if(a==='pdfc'){var n=Number(el.dataset.n);savePdfBytes(function(){return buildPdf(cycleInfoArchive(n))},'izzatdaar-cycle-'+n+'-main-report.pdf')}
+  else if(a==='zipcur'){var inf=cycleInfoCurrent();later('Creating ZIP…',function(){saveFile(zip(dayFiles(inf.start,inf.days.length)),'izzatdaar-reports-cycle-'+inf.n+'.zip','application/zip')})}
+  else if(a==='zipc'){var n2=Number(el.dataset.n),c=docs['cycle-'+n2];later('Creating ZIP…',function(){saveFile(zip(dayFiles(c.start,N)),'izzatdaar-reports-cycle-'+n2+'.zip','application/zip')})}
+  else if(a==='auto'){
+    var on=!(docs.settings&&docs.settings.auto);
+    docs.settings={auto:on,last:addDays(today(),-1)};persist();render();
+    toast(on?'Turned on. From tomorrow it will try to download yesterday\'s PDF.':'Turned off');
+  }
+  else if(a==='export')exportBackup();
+  else if(a==='import')$('#importFile').click();
+});
+document.addEventListener('input',function(e){
+  var t=e.target;if(!editing||!draft||t.dataset.f===undefined)return;
+  var g=draft[+t.dataset.gi];if(!g)return;
+  if(t.dataset.f==='gname')g.name=t.value;
+  else if(t.dataset.f==='gtot'){g.total=Math.max(0,Math.min(100,parseFloat(t.value)||0));var se=$('#sumTot');if(se){se.textContent=sumTxt();se.className=sumCls()}}
+  else if(t.dataset.f==='n'&&g.items[+t.dataset.ii])g.items[+t.dataset.ii].n=t.value;
+});
+document.addEventListener('change',function(e){
+  var t=e.target;if(!editing||!draft||t.dataset.f===undefined)return;
+  var g=draft[+t.dataset.gi];if(!g)return;
+  if(t.dataset.f==='gtot'){render();return}
+  var it=g.items[+t.dataset.ii];if(!it)return;
+  if(t.dataset.f==='w'){it.w=Math.max(1,Math.min(4,+t.value||1));render()}
+  else if(t.dataset.f==='mt'){if(t.checked)it.days=[1,4];else delete it.days;render()}
+});
+function dayCheck(){var t=today();if(t!==lastDay){lastDay=t;sel=null;maybeRollover();autoRun();render()}}
+document.addEventListener('visibilitychange',function(){if(!document.hidden)dayCheck()});
+setInterval(dayCheck,60000);
+
+/* ---------- boot ---------- */
+docs=load();meta=docs.meta||null;
+render();
+maybeRollover();
+autoRun();
+})();
+if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
